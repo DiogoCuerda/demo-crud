@@ -1,4 +1,4 @@
-package com.api.democrud.dtos;
+package com.api.democrud.dto;
 
 public class EstoqueDto {
 

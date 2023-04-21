@@ -1,6 +1,6 @@
-package com.api.democrud.repositories;
+package com.api.democrud.repositorie;
 
-import com.api.democrud.models.Produto;
+import com.api.democrud.model.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

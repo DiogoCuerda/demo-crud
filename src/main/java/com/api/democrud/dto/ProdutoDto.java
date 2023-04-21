@@ -1,7 +1,5 @@
-package com.api.democrud.dtos;
+package com.api.democrud.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

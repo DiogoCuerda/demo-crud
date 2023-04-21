@@ -1,18 +1,15 @@
-package com.api.democrud.controllers;
+package com.api.democrud.controller;
 
 
-import com.api.democrud.dtos.ProdutoDto;
-import com.api.democrud.models.Produto;
-import com.api.democrud.services.ProdutoService;
+import com.api.democrud.dto.ProdutoDto;
+import com.api.democrud.model.Produto;
+import com.api.democrud.service.ProdutoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -59,8 +56,11 @@ public class ProdutoController {
     }
 
     @PutMapping("/{id}")
-    public void updateProduto(@PathVariable(value = "id") UUID id, @RequestBody @Valid ProdutoDto produtoDto) {
-        Optional<Produto> produtoModelOptional = produtoService.findbyId(id);
+    @ResponseStatus(HttpStatus.OK) //Qual é a resposta http correta para um put bem suces
+    public Produto updateProduto(@PathVariable(value = "id") UUID id, @RequestBody @Valid ProdutoDto produtoDto) {
+
+        return  produtoService.edit(id, produtoDto);
+        /* Optional<Produto> produtoModelOptional = produtoService.findbyId(id);
         if (!produtoModelOptional.isPresent()) {
           //  return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ID solicitada não encontrada!!");
         }
@@ -69,18 +69,8 @@ public class ProdutoController {
                 && !Arrays.equals(produtoModel.getDescricao().getBytes(), produtoDto.getDescricao().getBytes())) {
           //  return ResponseEntity.status(HttpStatus.CONFLICT).body("Não é possível atualizar, já existe produto com a descrição solicitada");
         }
-        // if(produtoDto.getDescricao() != produtoModel.getDescricao())
-        if (produtoDto.getDescricao().getBytes()[0] != 45) {
-            produtoModel.setDescricao(produtoDto.getDescricao());
-        }
+       */
 
-        if (produtoDto.getAtivo() != produtoModel.getAtivo()) {
-            produtoModel.setAtivo(produtoDto.getAtivo());
-        }
-        if (produtoDto.getPreco() != 0) {
-            produtoModel.setPreco(produtoDto.getPreco());
-        }
-       // return ResponseEntity.status(HttpStatus.FOUND).body(produtoService.save(produtoModel));
     }
 
 

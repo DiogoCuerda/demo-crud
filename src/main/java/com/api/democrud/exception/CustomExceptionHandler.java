@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     public static final String DESCRICAO_DUPLICADA = "Produto já cadastrado com esta descrição";
+    public static final String PRODUTO_NENCONTRADO = "ID de produto solicitada não encontrada!!";
 
     @ResponseBody
     @ResponseStatus(HttpStatus.CONFLICT)
@@ -22,4 +23,14 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         ex.printStackTrace();
         return new ResponseError(ex.getMessage());
     }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(ProdutoNencontradoException.class)
+    public ResponseError handleProdutoNencontradoException(ProdutoNencontradoException ex){
+
+        ex.printStackTrace();
+        return new ResponseError(ex.getMessage());
+    }
+
 }

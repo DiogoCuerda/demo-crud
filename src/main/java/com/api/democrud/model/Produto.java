@@ -1,4 +1,4 @@
-package com.api.democrud.models;
+package com.api.democrud.model;
 
 
 import jakarta.persistence.*;

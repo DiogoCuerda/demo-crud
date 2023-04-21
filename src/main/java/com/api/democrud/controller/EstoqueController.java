@@ -1,11 +1,9 @@
-package com.api.democrud.controllers;
+package com.api.democrud.controller;
 
-import com.api.democrud.dtos.EstoqueDto;
-import com.api.democrud.models.Produto;
-import com.api.democrud.services.ProdutoService;
+import com.api.democrud.dto.EstoqueDto;
+import com.api.democrud.model.Produto;
+import com.api.democrud.service.ProdutoService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
