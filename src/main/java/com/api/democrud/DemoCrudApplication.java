@@ -16,7 +16,12 @@ public class DemoCrudApplication {
 
 	@GetMapping("/")
 	public String index(){
-		return "Hey Diplo vai toma no cu!";
+		return "Hey Diplo vai toma no cu!------";
+	}
+
+	@GetMapping("/easteregg")
+	public String easterEgg(){
+		return "<img src=\"https://img.estadao.com.br/resources/jpg/9/2/1489168579929.jpg\" alt=\"Girl in a jacket\" width=\"500\" height=\"400\">";
 	}
 
 }
