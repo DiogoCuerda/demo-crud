@@ -26,53 +26,38 @@ public class ProdutoController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Produto saveProduto(@Valid @RequestBody ProdutoDto produtoDto) {
+
         return produtoService.save(produtoDto);
     }
 
     @GetMapping //Mapeia o GET do /produto para este metodo
-    public ResponseEntity<List<Produto>> getAllProdutos() {
-        return ResponseEntity.status(HttpStatus.OK).body(produtoService.getAll());
+    @ResponseStatus(HttpStatus.OK)
+    public List<Produto> getAllProdutos() {
 
+        return produtoService.getAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getOneProduto(@PathVariable(value = "id") UUID id) {
-        Optional<Produto> produtoModelOptional = produtoService.findbyId(id);
-        if (!produtoModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ID solicitada não encontrada!!");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(produtoModelOptional.get());
+    @ResponseStatus(HttpStatus.OK)
+    public Produto getOneProduto(@PathVariable(value = "id") UUID id) {
+
+        return produtoService.consultaUm(id);
     }
 
-
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteProduto(@PathVariable(value = "id") UUID id) {
-        Optional<Produto> produtoModelOptional = produtoService.findbyId(id);
-        if (!produtoModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ID solicitada não encontrada!!");
-        }
-        produtoService.deletebyId(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Deletou esse id: " + id);
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String deleteProduto(@PathVariable(value = "id") UUID id) {
+
+        return produtoService.deletebyId(id);
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK) //Qual é a resposta http correta para um put bem suces
+    @ResponseStatus(HttpStatus.OK) //Qual é a resposta http correta para um put bem sucedido
     public Produto updateProduto(@PathVariable(value = "id") UUID id, @RequestBody @Valid ProdutoDto produtoDto) {
 
-        return  produtoService.edit(id, produtoDto);
-        /* Optional<Produto> produtoModelOptional = produtoService.findbyId(id);
-        if (!produtoModelOptional.isPresent()) {
-          //  return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ID solicitada não encontrada!!");
-        }
-        var produtoModel = produtoModelOptional.get();
-        if (produtoService.existsByDescricao(produtoDto.getDescricao())
-                && !Arrays.equals(produtoModel.getDescricao().getBytes(), produtoDto.getDescricao().getBytes())) {
-          //  return ResponseEntity.status(HttpStatus.CONFLICT).body("Não é possível atualizar, já existe produto com a descrição solicitada");
-        }
-       */
-
+        return produtoService.edit(id, produtoDto);
     }
-
 
 }
 

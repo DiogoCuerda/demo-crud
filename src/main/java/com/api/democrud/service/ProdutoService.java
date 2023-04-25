@@ -33,9 +33,10 @@ public class ProdutoService {
         BeanUtils.copyProperties(produtoDto, produto);
 
         if (produtoRepository.existsByDescricao(produtoDto.getDescricao())) {
+
             throw new ProdutoDuplicadoException(String.format(DESCRICAO_DUPLICADA));
         }
-
+        produto.setEstoque(0.0f);
         return produtoRepository.save(produto);
     }
 
@@ -44,7 +45,8 @@ public class ProdutoService {
         try {
             var produtoEdit = findbyId(id).get();//se falhar para achar ID cai no catch
             //Validações
-            if (produtoRepository.existsByDescricao(produtoDto.getDescricao())) {
+            if (produtoRepository.existsByDescricao(produtoDto.getDescricao())
+                    && !produtoDto.getDescricao().equals(produtoEdit.getDescricao())) {
                 throw new ProdutoDuplicadoException(String.format(DESCRICAO_DUPLICADA));
             }
 
@@ -58,15 +60,20 @@ public class ProdutoService {
             if (produtoDto.getPreco() != 0) {
                 produtoEdit.setPreco(produtoDto.getPreco());
             }
+
             return produtoRepository.save(produtoEdit);
-        } catch (NoSuchElementException e) {
+        }
+        catch (NoSuchElementException e) {
             throw new ProdutoNencontradoException(String.format(PRODUTO_NENCONTRADO)); //Lança essa exception se não encontrar elemento
         }
     }
 
-    public boolean existsByDescricao(String descricao) {
-        return produtoRepository.existsByDescricao(descricao);
-
+    public Produto consultaUm(UUID id) {
+        try {
+            return findbyId(id).get();
+        } catch (NoSuchElementException e) {
+            throw new ProdutoNencontradoException(String.format(PRODUTO_NENCONTRADO));
+        }
     }
 
     public List<Produto> getAll() {
@@ -77,8 +84,12 @@ public class ProdutoService {
         return produtoRepository.findById(id);
     }
 
-    public void deletebyId(UUID id) {
+    public String deletebyId(UUID id) {
+        if (!produtoRepository.existsById(id)) {
+            throw new ProdutoNencontradoException(String.format(PRODUTO_NENCONTRADO));
+        }
         produtoRepository.deleteById(id);
+        return ("Produto deletado:" + id);
     }
 
 
