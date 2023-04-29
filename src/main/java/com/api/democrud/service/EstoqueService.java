@@ -20,7 +20,7 @@ public class EstoqueService {
     private final ProdutoService produtoService;
 
     public Produto entradaEstoque(UUID id, EstoqueDto estoqueDto) {
-        Optional<Produto> produto = produtoService.findbyId(id);
+        Optional<Produto> produto = produtoService.buscaporId(id);
         if (!produto.isPresent()) {
             throw new ProdutoNencontradoException(String.format(PRODUTO_NENCONTRADO));
         }
@@ -31,7 +31,7 @@ public class EstoqueService {
 
     }
     public Produto saidaEstoque(UUID id, EstoqueDto estoqueDto) {
-        Optional<Produto> produto = produtoService.findbyId(id);
+        Optional<Produto> produto = produtoService.buscaporId(id);
         if (!produto.isPresent()) {
             throw new ProdutoNencontradoException(String.format(PRODUTO_NENCONTRADO));
         }

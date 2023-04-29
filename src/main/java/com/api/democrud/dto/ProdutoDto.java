@@ -1,5 +1,6 @@
 package com.api.democrud.dto;
 
+import com.api.democrud.enums.TipoProdutoEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,4 +14,5 @@ public class ProdutoDto {
  private Float preco;
  private Float estoque;
  private Boolean ativo;
+ private TipoProdutoEnum tipo;
 }

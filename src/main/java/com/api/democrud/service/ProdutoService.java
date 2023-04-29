@@ -28,7 +28,7 @@ public class ProdutoService {
     private final ProdutoRepository produtoRepository;
 
     @Transactional
-    public Produto save(ProdutoDto produtoDto) {
+    public Produto salvar(ProdutoDto produtoDto) {
         Produto produto = new Produto();
         BeanUtils.copyProperties(produtoDto, produto);
 
@@ -36,27 +36,23 @@ public class ProdutoService {
 
             throw new ProdutoDuplicadoException(String.format(DESCRICAO_DUPLICADA));
         }
-        produto.setEstoque(0.0f);
+
         return produtoRepository.save(produto);
     }
 
-    public Produto edit(UUID id, ProdutoDto produtoDto) {
+    public Produto editar(UUID id, ProdutoDto produtoDto) {
 
         try {
-            var produtoEdit = findbyId(id).get();//se falhar para achar ID cai no catch
+            var produtoEdit = buscaporId(id).get();//se falhar para achar ID cai no catch
             //Validações
             if (produtoRepository.existsByDescricao(produtoDto.getDescricao())
                     && !produtoDto.getDescricao().equals(produtoEdit.getDescricao())) {
                 throw new ProdutoDuplicadoException(String.format(DESCRICAO_DUPLICADA));
             }
 
-            if (produtoDto.getDescricao() != produtoEdit.getDescricao())
-                if (produtoDto.getDescricao().getBytes()[0] != 45) {
-                    produtoEdit.setDescricao(produtoDto.getDescricao());
-                }
-            if (produtoDto.getAtivo() != produtoEdit.getAtivo()) {
-                produtoEdit.setAtivo(produtoDto.getAtivo());
-            }
+            produtoEdit.setDescricao(produtoDto.getDescricao());
+            produtoEdit.setAtivo(produtoDto.getAtivo());
+
             if (produtoDto.getPreco() != 0) {
                 produtoEdit.setPreco(produtoDto.getPreco());
             }
@@ -70,21 +66,21 @@ public class ProdutoService {
 
     public Produto consultaUm(UUID id) {
         try {
-            return findbyId(id).get();
+            return buscaporId(id).get();
         } catch (NoSuchElementException e) {
             throw new ProdutoNencontradoException(String.format(PRODUTO_NENCONTRADO));
         }
     }
 
-    public List<Produto> getAll() {
+    public List<Produto> consultaTodos() {
         return produtoRepository.findAll(Sort.by(Sort.Direction.ASC, "descricao"));
     }
 
-    public Optional<Produto> findbyId(UUID id) {
+    public Optional<Produto> buscaporId(UUID id) {
         return produtoRepository.findById(id);
     }
 
-    public String deletebyId(UUID id) {
+    public String deleteporId(UUID id) {
         if (!produtoRepository.existsById(id)) {
             throw new ProdutoNencontradoException(String.format(PRODUTO_NENCONTRADO));
         }

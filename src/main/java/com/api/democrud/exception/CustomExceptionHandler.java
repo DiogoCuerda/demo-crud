@@ -14,7 +14,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     public static final String DESCRICAO_DUPLICADA = "Produto já cadastrado com esta descrição";
     public static final String PRODUTO_NENCONTRADO = "ID de produto solicitada não encontrada!!";
-
     public static final String ESTOQUE_NEGATIVO = "Estoque não pode ser negativo";
 
     @ResponseBody
