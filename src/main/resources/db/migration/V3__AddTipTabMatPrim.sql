@@ -10,7 +10,8 @@ SET tipo = 'REVENDA';
 CREATE TABLE ficha_materia_prima (
 id UUID,
 id_produto UUID REFERENCES produto(id) NOT NULL,
-id_materia UUID REFERENCES produto(id) NOT NULL);
+id_materia UUID REFERENCES produto(id) NOT NULL,
+PRIMARY KEY (id_produto, id_materia));
 
 
 

@@ -2,6 +2,7 @@ package com.api.democrud.controller;
 
 
 import com.api.democrud.dto.ProdutoDto;
+import com.api.democrud.model.FichaMateriaPrima;
 import com.api.democrud.model.Produto;
 import com.api.democrud.service.ProdutoService;
 import jakarta.validation.Valid;
@@ -53,6 +54,7 @@ public class ProdutoController {
 
         return produtoService.editar(id, produtoDto);
     }
+
 
 }
 

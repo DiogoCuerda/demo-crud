@@ -4,7 +4,9 @@ package com.api.democrud.service;
 import com.api.democrud.dto.ProdutoDto;
 import com.api.democrud.exception.ProdutoDuplicadoException;
 import com.api.democrud.exception.ProdutoNencontradoException;
+import com.api.democrud.model.FichaMateriaPrima;
 import com.api.democrud.model.Produto;
+import com.api.democrud.repositorie.FichaMateriaPrimaRepository;
 import com.api.democrud.repositorie.ProdutoRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +45,7 @@ public class ProdutoService {
     public Produto editar(UUID id, ProdutoDto produtoDto) {
 
         try {
-            var produtoEdit = buscaporId(id).get();//se falhar para achar ID cai no catch
+            var produtoEdit = buscaporId(id).get();
             //Validações
             if (produtoRepository.existsByDescricao(produtoDto.getDescricao())
                     && !produtoDto.getDescricao().equals(produtoEdit.getDescricao())) {
@@ -60,7 +62,7 @@ public class ProdutoService {
             return produtoRepository.save(produtoEdit);
         }
         catch (NoSuchElementException e) {
-            throw new ProdutoNencontradoException(String.format(PRODUTO_NENCONTRADO)); //Lança essa exception se não encontrar elemento
+            throw new ProdutoNencontradoException(String.format(PRODUTO_NENCONTRADO));
         }
     }
 
