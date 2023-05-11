@@ -28,12 +28,12 @@ public class ProdutoController {
         return produtoService.salvar(produtoDto);
     }
 
-    @GetMapping
+ /*   @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Produto> getAllProdutos() {
 
         return produtoService.consultaTodos();
-    }
+    }*/
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -55,6 +55,17 @@ public class ProdutoController {
         return produtoService.editar(id, produtoDto);
     }
 
+    @GetMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public List<Produto> getProdutos(@RequestParam(defaultValue = "") String descricao,
+                                     @RequestParam(defaultValue = "") Boolean ativo){
+        if((ativo == null)&&(descricao == ""))
+        {
+            return produtoService.consultaTodos();
+        }
+
+        return produtoService.consultaFiltro(descricao,ativo);
+    }
 
 }
 

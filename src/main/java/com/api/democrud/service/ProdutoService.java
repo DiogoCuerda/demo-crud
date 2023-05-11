@@ -4,9 +4,7 @@ package com.api.democrud.service;
 import com.api.democrud.dto.ProdutoDto;
 import com.api.democrud.exception.ProdutoDuplicadoException;
 import com.api.democrud.exception.ProdutoNencontradoException;
-import com.api.democrud.model.FichaMateriaPrima;
 import com.api.democrud.model.Produto;
-import com.api.democrud.repositorie.FichaMateriaPrimaRepository;
 import com.api.democrud.repositorie.ProdutoRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -54,6 +52,7 @@ public class ProdutoService {
 
             produtoEdit.setDescricao(produtoDto.getDescricao());
             produtoEdit.setAtivo(produtoDto.getAtivo());
+            produtoEdit.setTipo(produtoDto.getTipo());
 
             if (produtoDto.getPreco() != 0) {
                 produtoEdit.setPreco(produtoDto.getPreco());
@@ -78,6 +77,9 @@ public class ProdutoService {
         return produtoRepository.findAll(Sort.by(Sort.Direction.ASC, "descricao"));
     }
 
+    public List<Produto> consultaFiltro(String descricao, Boolean ativo){
+        return produtoRepository.searchByProdutoDescricaoAtivo(descricao,ativo);
+    }
     public Optional<Produto> buscaporId(UUID id) {
         return produtoRepository.findById(id);
     }
