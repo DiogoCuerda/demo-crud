@@ -78,7 +78,9 @@ public class ProdutoService {
     }
 
     public List<Produto> consultaFiltro(String descricao, Boolean ativo){
-        return produtoRepository.searchByProdutoDescricaoAtivo(descricao,ativo);
+
+           return produtoRepository.findAllByDescricaoContainingAndAtivo(descricao,ativo);
+
     }
     public Optional<Produto> buscaporId(UUID id) {
         return produtoRepository.findById(id);

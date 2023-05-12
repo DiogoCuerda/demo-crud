@@ -15,7 +15,11 @@ public interface ProdutoRepository extends JpaRepository<Produto, UUID> {
     boolean existsByDescricao(String Descricao);
     boolean existsById(UUID id);
 
-    @Query("SELECT p from Produto p where p.descricao like %:descricao% and p.ativo = :ativo")
+    @Query("SELECT p from Produto p where p.descricao LIKE CONCAT('%',:descricao,'%') and p.ativo = :ativo")
     List<Produto> searchByProdutoDescricaoAtivo(@Param("descricao") String descricao, @Param("ativo") Boolean ativo);
 
+    @Query("SELECT p from Produto p where ativo = false")
+    List<Produto> searchByProdutoDisabled();
+
+    List<Produto>findAllByDescricaoContainingAndAtivo(String text, Boolean ativo);
 }

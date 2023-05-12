@@ -59,7 +59,7 @@ public class ProdutoController {
     @ResponseStatus(HttpStatus.OK)
     public List<Produto> getProdutos(@RequestParam(defaultValue = "") String descricao,
                                      @RequestParam(defaultValue = "") Boolean ativo){
-        if((ativo == null)&&(descricao == ""))
+        if((ativo == null)&&(descricao.equals("")))
         {
             return produtoService.consultaTodos();
         }
