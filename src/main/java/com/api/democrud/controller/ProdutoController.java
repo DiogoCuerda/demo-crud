@@ -28,13 +28,6 @@ public class ProdutoController {
         return produtoService.salvar(produtoDto);
     }
 
- /*   @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public List<Produto> getAllProdutos() {
-
-        return produtoService.consultaTodos();
-    }*/
-
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Produto getOneProduto(@PathVariable UUID id) {

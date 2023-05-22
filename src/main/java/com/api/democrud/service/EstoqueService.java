@@ -1,7 +1,7 @@
 package com.api.democrud.service;
 
 import com.api.democrud.dto.EstoqueDto;
-import com.api.democrud.exception.ProdutoNencontradoException;
+import com.api.democrud.exception.ElementoNencontradoException;
 import com.api.democrud.model.Produto;
 import com.api.democrud.repositorie.ProdutoRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class EstoqueService {
     public Produto entradaEstoque(UUID id, EstoqueDto estoqueDto) {
         Optional<Produto> produto = produtoService.buscaporId(id);
         if (!produto.isPresent()) {
-            throw new ProdutoNencontradoException(String.format(PRODUTO_NENCONTRADO));
+            throw new ElementoNencontradoException(String.format(PRODUTO_NENCONTRADO));
         }
 
         produto.get().setEstoque(produto.get().getEstoque() + estoqueDto.getEstoque());
@@ -33,12 +33,12 @@ public class EstoqueService {
     public Produto saidaEstoque(UUID id, EstoqueDto estoqueDto) {
         Optional<Produto> produto = produtoService.buscaporId(id);
         if (!produto.isPresent()) {
-            throw new ProdutoNencontradoException(String.format(PRODUTO_NENCONTRADO));
+            throw new ElementoNencontradoException(String.format(PRODUTO_NENCONTRADO));
         }
          if (produto.get().getEstoque() - estoqueDto.getEstoque() >= 0) {
            produto.get().setEstoque(produto.get().getEstoque() - estoqueDto.getEstoque());
             return produtoRepository.save(produto.get());
         }
-        throw new ProdutoNencontradoException(String.format(ESTOQUE_NEGATIVO));
+        throw new ElementoNencontradoException(String.format(ESTOQUE_NEGATIVO));
     }
 }

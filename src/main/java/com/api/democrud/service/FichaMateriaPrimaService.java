@@ -1,7 +1,7 @@
 package com.api.democrud.service;
 
 import com.api.democrud.dto.FichaMateriaPrimaDto;
-import com.api.democrud.exception.ProdutoNencontradoException;
+import com.api.democrud.exception.ElementoNencontradoException;
 import com.api.democrud.model.FichaMateriaPrima;
 import com.api.democrud.repositorie.FichaMateriaPrimaRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
-
-import static com.api.democrud.exception.CustomExceptionHandler.PRODUTO_NENCONTRADO;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +36,7 @@ public class FichaMateriaPrimaService {
         }
         catch (NoSuchElementException e)
         {
-            throw new ProdutoNencontradoException("Elemento não encontrado");
+            throw new ElementoNencontradoException("Elemento não encontrado");
         }
 
     }

@@ -15,6 +15,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     public static final String DESCRICAO_DUPLICADA = "Produto já cadastrado com esta descrição";
     public static final String PRODUTO_NENCONTRADO = "ID de produto solicitada não encontrada!!";
     public static final String ESTOQUE_NEGATIVO = "Estoque não pode ser negativo";
+        public static final String USUARIO_NENCONTRADO = "Usuário não encontrado";
 
     @ResponseBody
     @ResponseStatus(HttpStatus.CONFLICT)
@@ -27,8 +28,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ResponseBody
     @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler(ProdutoNencontradoException.class)
-    public ResponseError handleProdutoNencontradoException(ProdutoNencontradoException ex){
+    @ExceptionHandler(ElementoNencontradoException.class)
+    public ResponseError handleProdutoNencontradoException(ElementoNencontradoException ex){
 
         ex.printStackTrace();
         return new ResponseError(ex.getMessage());
@@ -37,7 +38,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseBody
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(EstoqueNegativoExcepion.class)
-    public ResponseError handleEstoqueNegativoException(ProdutoNencontradoException ex){
+    public ResponseError handleEstoqueNegativoException(ElementoNencontradoException ex){
 
         ex.printStackTrace();
         return new ResponseError(ex.getMessage());

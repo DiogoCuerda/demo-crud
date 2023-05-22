@@ -3,7 +3,7 @@ package com.api.democrud.service;
 
 import com.api.democrud.dto.ProdutoDto;
 import com.api.democrud.exception.ProdutoDuplicadoException;
-import com.api.democrud.exception.ProdutoNencontradoException;
+import com.api.democrud.exception.ElementoNencontradoException;
 import com.api.democrud.model.Produto;
 import com.api.democrud.repositorie.ProdutoRepository;
 import jakarta.transaction.Transactional;
@@ -61,7 +61,7 @@ public class ProdutoService {
             return produtoRepository.save(produtoEdit);
         }
         catch (NoSuchElementException e) {
-            throw new ProdutoNencontradoException(String.format(PRODUTO_NENCONTRADO));
+            throw new ElementoNencontradoException(String.format(PRODUTO_NENCONTRADO));
         }
     }
 
@@ -69,7 +69,7 @@ public class ProdutoService {
         try {
             return buscaporId(id).get();
         } catch (NoSuchElementException e) {
-            throw new ProdutoNencontradoException(String.format(PRODUTO_NENCONTRADO));
+            throw new ElementoNencontradoException(String.format(PRODUTO_NENCONTRADO));
         }
     }
 
@@ -88,7 +88,7 @@ public class ProdutoService {
 
     public String deleteporId(UUID id) {
         if (!produtoRepository.existsById(id)) {
-            throw new ProdutoNencontradoException(String.format(PRODUTO_NENCONTRADO));
+            throw new ElementoNencontradoException(String.format(PRODUTO_NENCONTRADO));
         }
         produtoRepository.deleteById(id);
         return ("Produto deletado:" + id);
