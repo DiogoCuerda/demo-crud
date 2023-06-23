@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public enum TipoProdutoEnum {
-    REVENDA,MATERIAP, SERVICO;
+    REVENDA,
+    MATERIAPRIMA,
+    SERVICO;
 
 }

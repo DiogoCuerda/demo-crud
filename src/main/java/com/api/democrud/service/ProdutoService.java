@@ -1,11 +1,11 @@
 package com.api.democrud.service;
 
 
-import com.api.democrud.dto.ProdutoDto;
+import com.api.democrud.dto.ProdutoDTO;
 import com.api.democrud.exception.ProdutoDuplicadoException;
 import com.api.democrud.exception.ElementoNencontradoException;
 import com.api.democrud.model.Produto;
-import com.api.democrud.repositorie.ProdutoRepository;
+import com.api.democrud.repository.ProdutoRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -28,11 +28,11 @@ public class ProdutoService {
     private final ProdutoRepository produtoRepository;
 
     @Transactional
-    public Produto salvar(ProdutoDto produtoDto) {
+    public Produto salvar(ProdutoDTO produtoDto) {
         Produto produto = new Produto();
         BeanUtils.copyProperties(produtoDto, produto);
 
-        if (produtoRepository.existsByDescricao(produtoDto.getDescricao())) {
+        if (produtoRepository.existsByNome(produtoDto.getNome())) {
 
             throw new ProdutoDuplicadoException(String.format(DESCRICAO_DUPLICADA));
         }
@@ -40,21 +40,21 @@ public class ProdutoService {
         return produtoRepository.save(produto);
     }
 
-    public Produto editar(UUID id, ProdutoDto produtoDto) {
+    public Produto editar(UUID id, ProdutoDTO produtoDto) {
 
         try {
             var produtoEdit = buscaporId(id).get();
             //Validações
-            if (produtoRepository.existsByDescricao(produtoDto.getDescricao())
-                    && !produtoDto.getDescricao().equals(produtoEdit.getDescricao())) {
+            if (produtoRepository.existsByNome(produtoDto.getNome())
+                    && !produtoDto.getNome().equals(produtoEdit.getNome())) {
                 throw new ProdutoDuplicadoException(String.format(DESCRICAO_DUPLICADA));
             }
 
-            produtoEdit.setDescricao(produtoDto.getDescricao());
+            produtoEdit.setNome(produtoDto.getNome());
             produtoEdit.setAtivo(produtoDto.getAtivo());
             produtoEdit.setTipo(produtoDto.getTipo());
 
-            if (produtoDto.getPreco() != 0) {
+            if (produtoDto.getPreco() != null) {
                 produtoEdit.setPreco(produtoDto.getPreco());
             }
 
@@ -77,9 +77,9 @@ public class ProdutoService {
         return produtoRepository.findAll(Sort.by(Sort.Direction.ASC, "descricao"));
     }
 
-    public List<Produto> consultaFiltro(String descricao, Boolean ativo){
+    public List<Produto> consultaFiltro(String nome, Boolean ativo){
 
-           return produtoRepository.findAllByDescricaoContainingAndAtivo(descricao,ativo);
+           return produtoRepository.findAllByNomeContainingAndAtivo(nome,ativo);
 
     }
     public Optional<Produto> buscaporId(UUID id) {

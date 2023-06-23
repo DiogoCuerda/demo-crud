@@ -1,5 +1,6 @@
 package com.api.democrud.model;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,21 +13,13 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "FICHA_MATERIA_PRIMA")
-
-public class FichaMateriaPrima implements Serializable {
+@Table(name = "tb_embalagem")
+public class Embalagem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-
-    @ManyToOne
-    @JoinColumn(name="id_produto")
-    private Produto id_produto;
-
-    @ManyToOne
-    @JoinColumn(name="id_materia")
-    private Produto id_materia;
+    private String nome;
 
 
 }

@@ -3,7 +3,7 @@ package com.api.democrud.service;
 import com.api.democrud.autentication.AutenticationRequest;
 import com.api.democrud.autentication.AutenticationResponse;
 import com.api.democrud.autentication.JwtService;
-import com.api.democrud.repositorie.UsuarioRepository;
+import com.api.democrud.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,7 +19,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     public AutenticationResponse authenticate(AutenticationRequest request) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(request.getNome(),request.getSenha());
-     System.out.println(passwordEncoder.encode(request.getSenha()));
+     System.out.println("pass: " + passwordEncoder.encode(request.getSenha()));
         //   request.setNome("admin");
      //   System.out.println();
         System.out.println(usernamePasswordAuthenticationToken.toString());

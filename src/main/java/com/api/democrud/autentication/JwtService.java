@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.function.Function;
 @Service
 public class JwtService {
-    private static final String S_KEY = "6D5971337436763979244226452948404D635166546A576E5A7234753778217A";
+    private static final String S_KEY = "753778214125442A472D4B614E645267556B58703273357638792F423F452848";
     public String extractUserName(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -33,7 +33,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000*60))
+                .setExpiration(new Date(System.currentTimeMillis() + 100000*60))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
 

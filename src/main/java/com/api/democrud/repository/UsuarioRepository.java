@@ -1,4 +1,4 @@
-package com.api.democrud.repositorie;
+package com.api.democrud.repository;
 
 import com.api.democrud.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;

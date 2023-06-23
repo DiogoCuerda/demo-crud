@@ -6,18 +6,18 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "PRODUTO")
+@Table(name = "tb_produto")
 public class Produto implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -25,24 +25,20 @@ public class Produto implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    private String descricao;
+    private String nome;
 
-    private Float preco;
+    private BigDecimal preco;
 
-    private Float estoque;
+    private Integer estoque;
 
     private Boolean ativo;
 
     @Enumerated(EnumType.STRING)
     private TipoProdutoEnum tipo;
 
-    @Column(name = "registrationdate")
+    @Column(name = "data_registro")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dataRegistro;
-
-    public Produto() {
-        this.estoque = 0.0f;
-    }
 
     @PrePersist
     public void prePersist(){

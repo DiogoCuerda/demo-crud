@@ -1,8 +1,7 @@
 package com.api.democrud.controller;
 
 
-import com.api.democrud.dto.ProdutoDto;
-import com.api.democrud.model.FichaMateriaPrima;
+import com.api.democrud.dto.ProdutoDTO;
 import com.api.democrud.model.Produto;
 import com.api.democrud.service.ProdutoService;
 import jakarta.validation.Valid;
@@ -23,7 +22,7 @@ public class ProdutoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Produto saveProduto(@Valid @RequestBody ProdutoDto produtoDto) {
+    public Produto saveProduto(@Valid @RequestBody ProdutoDTO produtoDto) {
 
         return produtoService.salvar(produtoDto);
     }
@@ -43,7 +42,7 @@ public class ProdutoController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Produto updateProduto(@PathVariable UUID id, @RequestBody @Valid ProdutoDto produtoDto) {
+    public Produto updateProduto(@PathVariable UUID id, @RequestBody @Valid ProdutoDTO produtoDto) {
 
         return produtoService.editar(id, produtoDto);
     }

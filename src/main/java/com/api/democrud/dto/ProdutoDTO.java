@@ -5,14 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProdutoDto {
+public class ProdutoDTO {
 
- private String descricao;
- private Float preco;
- private Float estoque;
+ private String nome;
+ private BigDecimal preco;
+ private Integer estoque;
  private Boolean ativo;
  private TipoProdutoEnum tipo;
 }
