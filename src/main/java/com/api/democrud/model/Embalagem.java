@@ -21,5 +21,10 @@ public class Embalagem implements Serializable {
     private UUID id;
     private String nome;
 
+    @ManyToOne
+    private Produto produto;
+
+
+
 
 }

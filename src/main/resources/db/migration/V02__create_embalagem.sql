@@ -1,7 +1,7 @@
 create table tb_embalagem(
 id UUID PRIMARY KEY,
 nome VARCHAR(40),
-idproduto UUID,
-FOREIGN KEY (idproduto)
+produto_id UUID,
+FOREIGN KEY (produto_id)
       REFERENCES tb_produto (id)
-)
+);

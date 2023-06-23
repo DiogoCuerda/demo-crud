@@ -10,5 +10,5 @@ data_registro TIMESTAMP
 CREATE TABLE tb_usuario (
 id UUID PRIMARY KEY,
 nome VARCHAR(40),
-senha VARCHAR(40)
+senha VARCHAR(80)
 );

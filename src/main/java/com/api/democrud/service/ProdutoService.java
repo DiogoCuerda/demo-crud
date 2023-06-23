@@ -2,6 +2,7 @@ package com.api.democrud.service;
 
 
 import com.api.democrud.dto.ProdutoDTO;
+import com.api.democrud.enums.CategoriaProdutoEnum;
 import com.api.democrud.exception.ProdutoDuplicadoException;
 import com.api.democrud.exception.ElementoNencontradoException;
 import com.api.democrud.model.Produto;
@@ -31,7 +32,7 @@ public class ProdutoService {
     public Produto salvar(ProdutoDTO produtoDto) {
         Produto produto = new Produto();
         BeanUtils.copyProperties(produtoDto, produto);
-
+        produto.setCategoria(CategoriaProdutoEnum.REVENDA);
         if (produtoRepository.existsByNome(produtoDto.getNome())) {
 
             throw new ProdutoDuplicadoException(String.format(DESCRICAO_DUPLICADA));
@@ -52,7 +53,7 @@ public class ProdutoService {
 
             produtoEdit.setNome(produtoDto.getNome());
             produtoEdit.setAtivo(produtoDto.getAtivo());
-            produtoEdit.setTipo(produtoDto.getTipo());
+            produtoEdit.setCategoria(produtoDto.getCategoria());
 
             if (produtoDto.getPreco() != null) {
                 produtoEdit.setPreco(produtoDto.getPreco());
