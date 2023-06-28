@@ -64,15 +64,27 @@ public class ProdutoService {
         }
     }
 
-    public Produto consultaUm(UUID id) {
+    public ProdutoResponseDTO consultaUm(UUID id) {
         try {
-            return buscaporId(id).get();
+
+            ProdutoResponseDTO produtoResponseDTO = new ProdutoResponseDTO();
+            Produto produto = buscaporId(id).get();
+            produtoResponseDTO.setId(produto.getId());
+            produtoResponseDTO.setEstoque(produto.getEstoque());
+            produtoResponseDTO.setNome(produto.getNome());
+            produtoResponseDTO.setAtivo(produto.getAtivo());
+            produtoResponseDTO.setPreco(produto.getPreco());
+            produtoResponseDTO.setCategoria(produto.getCategoria());
+            produtoResponseDTO.setEmbalagem(produto.getUuids());
+            return produtoResponseDTO;
+
         } catch (NoSuchElementException e) {
             throw new ElementoNencontradoException(String.format(PRODUTO_NENCONTRADO));
         }
     }
 
     public List<ProdutoResponseDTO> consultaTodos() {
+
         List<Produto> produtos = produtoRepository.findAll(Sort.by(Sort.Direction.ASC, "nome"));
         List<ProdutoResponseDTO> produtoResponseDTOS = new ArrayList<ProdutoResponseDTO>();
 

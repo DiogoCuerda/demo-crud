@@ -30,7 +30,7 @@ public class ProdutoController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Produto getOneProduto(@PathVariable UUID id) {
+    public ProdutoResponseDTO getOneProduto(@PathVariable UUID id) {
 
         return produtoService.consultaUm(id);
     }

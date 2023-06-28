@@ -1,6 +1,7 @@
 package com.api.democrud.controller;
 
 import com.api.democrud.dto.request.EmbalagemRequestDTO;
+import com.api.democrud.dto.response.EmbalagemResponseDTO;
 import com.api.democrud.model.Embalagem;
 import com.api.democrud.service.EmbalagemService;
 import jakarta.validation.Valid;
@@ -20,7 +21,7 @@ public class EmbalagemController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Embalagem saveEmbalagem(@Valid @RequestBody EmbalagemRequestDTO embalagemRequestDTO) {
+    public EmbalagemResponseDTO saveEmbalagem(@Valid @RequestBody EmbalagemRequestDTO embalagemRequestDTO) {
 
         return embalagemService.save(embalagemRequestDTO);
     }

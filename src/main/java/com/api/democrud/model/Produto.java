@@ -33,11 +33,8 @@ public class Produto implements Serializable {
     private UUID id;
 
     private String nome;
-
     private BigDecimal preco;
-
     private Integer estoque;
-
     private Boolean ativo;
 
     @Enumerated(EnumType.STRING)
@@ -55,13 +52,15 @@ public class Produto implements Serializable {
         this.dataRegistro = LocalDateTime.now();
     }
 
+    @JsonIgnore
     public List<UUID> getUuids(){
         List<UUID> listUuid = new ArrayList<UUID>();
-
-        for(int i = 0; i < embalagem.size(); i++){
-            listUuid.add(embalagem.get(i).getId());
+        if (embalagem != null) {
+            for (int i = 0; i < embalagem.size(); i++) {
+                listUuid.add(embalagem.get(i).getId());
+            }
         }
-       return listUuid;
+        return listUuid;
     }
 
 }
