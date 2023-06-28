@@ -19,12 +19,12 @@ public class Embalagem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+
     private String nome;
 
     @ManyToOne
+    @JoinColumn(name = "produto_id")
     private Produto produto;
-
-
 
 
 }

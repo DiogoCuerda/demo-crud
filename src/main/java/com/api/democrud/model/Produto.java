@@ -2,10 +2,13 @@ package com.api.democrud.model;
 
 
 import com.api.democrud.enums.CategoriaProdutoEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Type;
 import org.springframework.data.util.QTypeContributor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,6 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,7 +43,7 @@ public class Produto implements Serializable {
     @Enumerated(EnumType.STRING)
     private CategoriaProdutoEnum categoria;
 
-    @OneToMany(mappedBy = "produto", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "produto",fetch = FetchType.LAZY)
     private List<Embalagem> embalagem;
 
     @Column(name = "data_registro")
@@ -51,5 +55,13 @@ public class Produto implements Serializable {
         this.dataRegistro = LocalDateTime.now();
     }
 
+    public List<UUID> getUuids(){
+        List<UUID> listUuid = new ArrayList<UUID>();
+
+        for(int i = 0; i < embalagem.size(); i++){
+            listUuid.add(embalagem.get(i).getId());
+        }
+       return listUuid;
+    }
 
 }

@@ -1,7 +1,8 @@
 package com.api.democrud.service;
 
 
-import com.api.democrud.dto.ProdutoDTO;
+import com.api.democrud.dto.request.ProdutoRequestDTO;
+import com.api.democrud.dto.response.ProdutoResponseDTO;
 import com.api.democrud.enums.CategoriaProdutoEnum;
 import com.api.democrud.exception.ProdutoDuplicadoException;
 import com.api.democrud.exception.ElementoNencontradoException;
@@ -13,10 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static com.api.democrud.exception.CustomExceptionHandler.DESCRICAO_DUPLICADA;
 import static com.api.democrud.exception.CustomExceptionHandler.PRODUTO_NENCONTRADO;
@@ -29,11 +27,11 @@ public class ProdutoService {
     private final ProdutoRepository produtoRepository;
 
     @Transactional
-    public Produto salvar(ProdutoDTO produtoDto) {
+    public Produto salvar(ProdutoRequestDTO produtoRequestDto) {
         Produto produto = new Produto();
-        BeanUtils.copyProperties(produtoDto, produto);
+        BeanUtils.copyProperties(produtoRequestDto, produto);
         produto.setCategoria(CategoriaProdutoEnum.REVENDA);
-        if (produtoRepository.existsByNome(produtoDto.getNome())) {
+        if (produtoRepository.existsByNome(produtoRequestDto.getNome())) {
 
             throw new ProdutoDuplicadoException(String.format(DESCRICAO_DUPLICADA));
         }
@@ -41,22 +39,22 @@ public class ProdutoService {
         return produtoRepository.save(produto);
     }
 
-    public Produto editar(UUID id, ProdutoDTO produtoDto) {
+    public Produto editar(UUID id, ProdutoRequestDTO produtoRequestDto) {
 
         try {
             var produtoEdit = buscaporId(id).get();
             //Validações
-            if (produtoRepository.existsByNome(produtoDto.getNome())
-                    && !produtoDto.getNome().equals(produtoEdit.getNome())) {
+            if (produtoRepository.existsByNome(produtoRequestDto.getNome())
+                    && !produtoRequestDto.getNome().equals(produtoEdit.getNome())) {
                 throw new ProdutoDuplicadoException(String.format(DESCRICAO_DUPLICADA));
             }
 
-            produtoEdit.setNome(produtoDto.getNome());
-            produtoEdit.setAtivo(produtoDto.getAtivo());
-            produtoEdit.setCategoria(produtoDto.getCategoria());
+            produtoEdit.setNome(produtoRequestDto.getNome());
+            produtoEdit.setAtivo(produtoRequestDto.getAtivo());
+            produtoEdit.setCategoria(produtoRequestDto.getCategoria());
 
-            if (produtoDto.getPreco() != null) {
-                produtoEdit.setPreco(produtoDto.getPreco());
+            if (produtoRequestDto.getPreco() != null) {
+                produtoEdit.setPreco(produtoRequestDto.getPreco());
             }
 
             return produtoRepository.save(produtoEdit);
@@ -74,14 +72,30 @@ public class ProdutoService {
         }
     }
 
-    public List<Produto> consultaTodos() {
-        return produtoRepository.findAll(Sort.by(Sort.Direction.ASC, "descricao"));
+    public List<ProdutoResponseDTO> consultaTodos() {
+        List<Produto> produtos = produtoRepository.findAll(Sort.by(Sort.Direction.ASC, "nome"));
+        List<ProdutoResponseDTO> produtoResponseDTOS = new ArrayList<ProdutoResponseDTO>();
+
+        for(int i = 0;i < produtos.size();i++){
+           ProdutoResponseDTO produtoResponseDTO = new ProdutoResponseDTO();
+           Produto produto = produtos.get(i);
+
+           produtoResponseDTO.setId(produto.getId());
+           produtoResponseDTO.setEstoque(produto.getEstoque());
+           produtoResponseDTO.setNome(produto.getNome());
+           produtoResponseDTO.setAtivo(produto.getAtivo());
+           produtoResponseDTO.setPreco(produto.getPreco());
+           produtoResponseDTO.setCategoria(produto.getCategoria());
+           produtoResponseDTO.setEmbalagem(produto.getUuids());
+           produtoResponseDTOS.add(produtoResponseDTO);
+        }
+
+        return produtoResponseDTOS;
     }
 
     public List<Produto> consultaFiltro(String nome, Boolean ativo){
 
            return produtoRepository.findAllByNomeContainingAndAtivo(nome,ativo);
-
     }
     public Optional<Produto> buscaporId(UUID id) {
         return produtoRepository.findById(id);

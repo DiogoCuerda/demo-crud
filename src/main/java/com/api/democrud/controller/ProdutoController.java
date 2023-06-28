@@ -1,7 +1,8 @@
 package com.api.democrud.controller;
 
 
-import com.api.democrud.dto.ProdutoDTO;
+import com.api.democrud.dto.request.ProdutoRequestDTO;
+import com.api.democrud.dto.response.ProdutoResponseDTO;
 import com.api.democrud.model.Produto;
 import com.api.democrud.service.ProdutoService;
 import jakarta.validation.Valid;
@@ -22,9 +23,9 @@ public class ProdutoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Produto saveProduto(@Valid @RequestBody ProdutoDTO produtoDto) {
+    public Produto saveProduto(@Valid @RequestBody ProdutoRequestDTO produtoRequestDto) {
 
-        return produtoService.salvar(produtoDto);
+        return produtoService.salvar(produtoRequestDto);
     }
 
     @GetMapping("/{id}")
@@ -42,9 +43,9 @@ public class ProdutoController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Produto updateProduto(@PathVariable UUID id, @RequestBody @Valid ProdutoDTO produtoDto) {
+    public Produto updateProduto(@PathVariable UUID id, @RequestBody @Valid ProdutoRequestDTO produtoRequestDto) {
 
-        return produtoService.editar(id, produtoDto);
+        return produtoService.editar(id, produtoRequestDto);
     }
 
     @GetMapping()
@@ -53,10 +54,16 @@ public class ProdutoController {
                                      @RequestParam(defaultValue = "") Boolean ativo){
         if((ativo == null)&&(descricao.equals("")))
         {
-            return produtoService.consultaTodos();
+         //   return produtoService.consultaTodos();
         }
 
         return produtoService.consultaFiltro(descricao,ativo);
+    }
+
+    @GetMapping("/all")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProdutoResponseDTO> getAllProdutos(){
+        return produtoService.consultaTodos();
     }
 
 }

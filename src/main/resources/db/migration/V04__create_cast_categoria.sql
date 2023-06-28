@@ -1,0 +1,1 @@
+CREATE CAST (character varying as categoriaproduto) WITH INOUT AS IMPLICIT;
