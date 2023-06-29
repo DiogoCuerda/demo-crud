@@ -75,7 +75,7 @@ public class ProdutoService {
             produtoResponseDTO.setAtivo(produto.getAtivo());
             produtoResponseDTO.setPreco(produto.getPreco());
             produtoResponseDTO.setCategoria(produto.getCategoria());
-            produtoResponseDTO.setEmbalagem(produto.getUuids());
+            produtoResponseDTO.setEmbalagem(produto.getEmbalagems());
             return produtoResponseDTO;
 
         } catch (NoSuchElementException e) {
@@ -98,7 +98,7 @@ public class ProdutoService {
            produtoResponseDTO.setAtivo(produto.getAtivo());
            produtoResponseDTO.setPreco(produto.getPreco());
            produtoResponseDTO.setCategoria(produto.getCategoria());
-           produtoResponseDTO.setEmbalagem(produto.getUuids());
+           produtoResponseDTO.setEmbalagem(produto.getEmbalagems());
            produtoResponseDTOS.add(produtoResponseDTO);
         }
 

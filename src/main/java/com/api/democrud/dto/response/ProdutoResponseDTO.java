@@ -21,6 +21,7 @@ public class ProdutoResponseDTO {
     private Integer estoque;
     private Boolean ativo;
     private CategoriaProdutoEnum categoria;
-    private List<UUID> embalagem;
+    private List<EmbalagemResponseDTO> embalagem;
+    //private List<UUID> embalagem;
 
 }

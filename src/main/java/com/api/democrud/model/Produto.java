@@ -1,6 +1,7 @@
 package com.api.democrud.model;
 
 
+import com.api.democrud.dto.response.EmbalagemResponseDTO;
 import com.api.democrud.enums.CategoriaProdutoEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -52,15 +53,30 @@ public class Produto implements Serializable {
         this.dataRegistro = LocalDateTime.now();
     }
 
+//    @JsonIgnore
+//    public List<UUID> getUuids(){
+//        List<UUID> listUuid = new ArrayList<UUID>();
+//        if (embalagem != null) {
+//            for (int i = 0; i < embalagem.size(); i++) {
+//                listUuid.add(embalagem.get(i).getId());
+//            }
+//        }
+//        return listUuid;
+//    }
     @JsonIgnore
-    public List<UUID> getUuids(){
-        List<UUID> listUuid = new ArrayList<UUID>();
-        if (embalagem != null) {
-            for (int i = 0; i < embalagem.size(); i++) {
-                listUuid.add(embalagem.get(i).getId());
+    public List<EmbalagemResponseDTO> getEmbalagems(){
+        List<EmbalagemResponseDTO> listEmbalagem = new ArrayList<EmbalagemResponseDTO>();
+        if (embalagem != null){
+            for(int i = 0; i < embalagem.size(); i++){
+               EmbalagemResponseDTO embalagemResponseDTO = new EmbalagemResponseDTO();
+               embalagemResponseDTO.setProdutoId(embalagem.get(i).getProduto().getId());
+               embalagemResponseDTO.setNome(embalagem.get(i).getNome());
+               listEmbalagem.add(embalagemResponseDTO);
             }
+
         }
-        return listUuid;
+       return  listEmbalagem;
     }
+
 
 }
