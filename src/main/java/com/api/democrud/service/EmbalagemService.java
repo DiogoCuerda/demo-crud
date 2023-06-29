@@ -33,7 +33,7 @@ public class EmbalagemService {
         embalagem = embalagemRepository.save(embalagem);
 
         embalagemResponseDTO.setNome(embalagem.getNome());
-        embalagemResponseDTO.setProdutoId(embalagem.getProduto().getId());
+        embalagemResponseDTO.setId(embalagem.getId());
         return embalagemResponseDTO;
 
     }

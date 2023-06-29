@@ -35,7 +35,6 @@ public class ProdutoService {
 
             throw new ProdutoDuplicadoException(String.format(DESCRICAO_DUPLICADA));
         }
-
         return produtoRepository.save(produto);
     }
 
@@ -67,15 +66,17 @@ public class ProdutoService {
     public ProdutoResponseDTO consultaUm(UUID id) {
         try {
 
-            ProdutoResponseDTO produtoResponseDTO = new ProdutoResponseDTO();
             Produto produto = buscaporId(id).get();
-            produtoResponseDTO.setId(produto.getId());
-            produtoResponseDTO.setEstoque(produto.getEstoque());
-            produtoResponseDTO.setNome(produto.getNome());
-            produtoResponseDTO.setAtivo(produto.getAtivo());
-            produtoResponseDTO.setPreco(produto.getPreco());
-            produtoResponseDTO.setCategoria(produto.getCategoria());
-            produtoResponseDTO.setEmbalagem(produto.getEmbalagems());
+            ProdutoResponseDTO produtoResponseDTO = ProdutoResponseDTO.builder()
+                    .id(produto.getId())
+                    .estoque(produto.getEstoque())
+                    .nome(produto.getNome())
+                    .ativo(produto.getAtivo())
+                    .preco(produto.getPreco())
+                    .categoria(produto.getCategoria())
+                    .embalagem(produto.getEmbalagems())
+                    .build();
+
             return produtoResponseDTO;
 
         } catch (NoSuchElementException e) {
@@ -89,19 +90,21 @@ public class ProdutoService {
         List<ProdutoResponseDTO> produtoResponseDTOS = new ArrayList<ProdutoResponseDTO>();
 
         for(int i = 0;i < produtos.size();i++){
-           ProdutoResponseDTO produtoResponseDTO = new ProdutoResponseDTO();
-           Produto produto = produtos.get(i);
 
-           produtoResponseDTO.setId(produto.getId());
-           produtoResponseDTO.setEstoque(produto.getEstoque());
-           produtoResponseDTO.setNome(produto.getNome());
-           produtoResponseDTO.setAtivo(produto.getAtivo());
-           produtoResponseDTO.setPreco(produto.getPreco());
-           produtoResponseDTO.setCategoria(produto.getCategoria());
-           produtoResponseDTO.setEmbalagem(produto.getEmbalagems());
-           produtoResponseDTOS.add(produtoResponseDTO);
+            Produto produto = produtos.get(i);
+
+           ProdutoResponseDTO produtoResponseDTO = ProdutoResponseDTO.builder()
+                   .id(produto.getId())
+                   .estoque(produto.getEstoque())
+                   .nome(produto.getNome())
+                   .ativo(produto.getAtivo())
+                   .preco(produto.getPreco())
+                   .categoria(produto.getCategoria())
+                   .embalagem(produto.getEmbalagems())
+                   .build();
+            produtoResponseDTOS.add(produtoResponseDTO);
+
         }
-
         return produtoResponseDTOS;
     }
 
