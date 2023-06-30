@@ -6,7 +6,9 @@ import com.api.democrud.enums.CategoriaProdutoEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
@@ -25,6 +27,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 @Table(name = "tb_produto")
 public class Produto implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -34,9 +37,11 @@ public class Produto implements Serializable {
     private UUID id;
 
     private String nome;
-    private BigDecimal preco;
     private Integer estoque;
     private Boolean ativo;
+
+    @NotNull
+    private BigDecimal preco;
 
     @Enumerated(EnumType.STRING)
     private CategoriaProdutoEnum categoria;

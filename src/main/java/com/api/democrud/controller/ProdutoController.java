@@ -23,8 +23,8 @@ public class ProdutoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Produto saveProduto(@Valid @RequestBody ProdutoRequestDTO produtoRequestDto) {
-        return produtoService.salvar(produtoRequestDto);
+    public void saveProduto(@Valid @RequestBody ProdutoRequestDTO produtoRequestDto) {
+        produtoService.salvar(produtoRequestDto);
     }
 
     @GetMapping("/{id}")
@@ -40,9 +40,9 @@ public class ProdutoController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Produto update(@PathVariable UUID id, @RequestBody @Valid ProdutoRequestDTO produtoRequestDto) {
+    public void update(@PathVariable UUID id, @RequestBody @Valid ProdutoRequestDTO produtoRequestDto) {
 
-        return produtoService.editar(id, produtoRequestDto);
+        produtoService.update(id, produtoRequestDto);
     }
 
 //    @GetMapping()
