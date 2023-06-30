@@ -24,46 +24,42 @@ public class ProdutoController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Produto saveProduto(@Valid @RequestBody ProdutoRequestDTO produtoRequestDto) {
-
         return produtoService.salvar(produtoRequestDto);
     }
 
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public ProdutoResponseDTO getOneProduto(@PathVariable UUID id) {
-
-        return produtoService.consultaUm(id);
+    public ProdutoResponseDTO findById(@PathVariable UUID id) {
+        return produtoService.findById(id);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String deleteProduto(@PathVariable UUID id) {
+    public String deleteById(@PathVariable UUID id) {
         return produtoService.deleteporId(id);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Produto updateProduto(@PathVariable UUID id, @RequestBody @Valid ProdutoRequestDTO produtoRequestDto) {
+    public Produto update(@PathVariable UUID id, @RequestBody @Valid ProdutoRequestDTO produtoRequestDto) {
 
         return produtoService.editar(id, produtoRequestDto);
     }
 
-    @GetMapping()
-    @ResponseStatus(HttpStatus.OK)
-    public List<Produto> getProdutos(@RequestParam(defaultValue = "") String descricao,
-                                     @RequestParam(defaultValue = "") Boolean ativo){
-        if((ativo == null)&&(descricao.equals("")))
-        {
-         //   return produtoService.consultaTodos();
-        }
+//    @GetMapping()
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<Produto> getProdutos(@RequestParam(defaultValue = "") String descricao,
+//                                     @RequestParam(defaultValue = "") Boolean ativo){
+//        if((ativo == null)&&(descricao.equals("")))
+//        {
+//         //   return produtoService.consultaTodos();
+//        }
+//
+//        return produtoService.consultaFiltro(descricao,ativo);
+//    }
 
-        return produtoService.consultaFiltro(descricao,ativo);
-    }
-
-    @GetMapping("/all")
-    @ResponseStatus(HttpStatus.OK)
-    public List<ProdutoResponseDTO> getAllProdutos(){
-        return produtoService.consultaTodos();
+    @GetMapping
+    public List<ProdutoResponseDTO> findAll(){
+        return produtoService.findAll();
     }
 
 }

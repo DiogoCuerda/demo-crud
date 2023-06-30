@@ -12,7 +12,7 @@ import java.util.UUID;
 @Builder
 public class EmbalagemResponseDTO {
 
-    private UUID id;
+  //  private UUID id;
     private String nome;
 
 }
