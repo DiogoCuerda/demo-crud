@@ -1,6 +1,7 @@
 package com.api.democrud.service;
 
 
+import com.api.democrud.assembler.EmbalagemAssembler;
 import com.api.democrud.dto.request.EmbalagemRequestDTO;
 import com.api.democrud.dto.response.EmbalagemResponseDTO;
 import com.api.democrud.exception.ElementoNencontradoException;
@@ -22,17 +23,10 @@ public class EmbalagemService {
 
     public EmbalagemResponseDTO save(EmbalagemRequestDTO embalagemRequestDTO) {
 
-        EmbalagemResponseDTO embalagemResponseDTO = new EmbalagemResponseDTO();
-
         Produto produto = produtoRepository.findById(embalagemRequestDTO.getProdutoId())
                 .orElseThrow(() -> new ElementoNencontradoException("Produto não encontrado."));
-
-        Embalagem embalagem = embalagemRepository.save(Embalagem.builder()
-                .nome(embalagemRequestDTO.getNome())
-                .produto(produto).build());
-
-        embalagemResponseDTO.setNome(embalagem.getNome());
-        return embalagemResponseDTO;
+        Embalagem embalagem = embalagemRepository.save(EmbalagemAssembler.toEntity(embalagemRequestDTO,produto));
+        return EmbalagemAssembler.toResponseModel(embalagem);
     }
 
     public void delete(UUID id) {

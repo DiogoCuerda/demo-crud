@@ -1,28 +1,29 @@
 package com.api.democrud.assembler;
 
 import com.api.democrud.dto.request.EmbalagemRequestDTO;
+import com.api.democrud.dto.response.EmbalagemResponseDTO;
 import com.api.democrud.exception.ElementoNencontradoException;
 import com.api.democrud.model.Embalagem;
 import com.api.democrud.model.Produto;
 import com.api.democrud.repository.ProdutoRepository;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
 
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class EmbalagemAssembler {
 
-
-    private static void toEntity(EmbalagemRequestDTO dto){
-
-       // return new Embalagem(dto.getNome(),)
+    public static Embalagem toEntity(EmbalagemRequestDTO dto,Produto produto){
+        return new Embalagem(dto.getNome(),produto);
     }
 
-    private static void uuidToProduto(UUID id){
-        ProdutoRepository produtoRepository;
-       // return produtoRepository.findById().orElseThrow(()-> new ElementoNencontradoException("Produto não encontrado"));
+    public static EmbalagemResponseDTO toResponseModel(Embalagem embalagem){
+        return new EmbalagemResponseDTO(embalagem.getNome());
     }
+
 }

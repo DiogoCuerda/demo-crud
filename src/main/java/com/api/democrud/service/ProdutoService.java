@@ -54,7 +54,6 @@ public class ProdutoService {
     }
 
     public List<ProdutoResponseDTO> findAll() {
-
         List<Produto> produtos = produtoRepository.findAll();
         return ProdutoAssembler.toListResponseModel(produtos);
     }

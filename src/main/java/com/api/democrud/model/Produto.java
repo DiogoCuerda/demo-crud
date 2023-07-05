@@ -49,6 +49,15 @@ public class Produto implements Serializable {
     @OneToMany(mappedBy = "produto",fetch = FetchType.LAZY)
     private List<Embalagem> embalagem;
 
+    @ManyToMany(cascade = {
+        CascadeType.ALL
+    })
+    @JoinTable(
+            name = "tb_produtoloja",
+            joinColumns = @JoinColumn(name = "produto_id"),
+            inverseJoinColumns = @JoinColumn(name = "loja_id"))
+    private List<Loja> loja;
+
     @Column(name = "data_registro")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dataRegistro;
