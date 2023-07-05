@@ -24,7 +24,7 @@ public class SecurityConfiguration  {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/**")
+                .requestMatchers("/auth/**","/list/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

@@ -14,10 +14,10 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class ProdutoRequestDTO {
 
- @NotBlank
- private String nome;
- private BigDecimal preco;
- private Integer estoque;
- private Boolean ativo;
- private CategoriaProdutoEnum categoria;
+    @NotBlank
+    private String nome;
+    private Integer estoque;
+    private Boolean ativo;
+    private BigDecimal preco;
+    private CategoriaProdutoEnum categoria;
 }

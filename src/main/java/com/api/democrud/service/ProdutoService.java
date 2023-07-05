@@ -1,6 +1,7 @@
 package com.api.democrud.service;
 
 
+import com.api.democrud.assembler.ProdutoAssembler;
 import com.api.democrud.dto.request.ProdutoRequestDTO;
 import com.api.democrud.dto.response.EmbalagemResponseDTO;
 import com.api.democrud.dto.response.ProdutoResponseDTO;
@@ -29,14 +30,11 @@ public class ProdutoService {
 
     @Transactional
     public void salvar(ProdutoRequestDTO produtoRequestDto) {
-        Produto produto = new Produto();
-        BeanUtils.copyProperties(produtoRequestDto, produto);
-        produto.setCategoria(CategoriaProdutoEnum.REVENDA);
         if (produtoRepository.existsByNome(produtoRequestDto.getNome())) {
 
             throw new ProdutoDuplicadoException(String.format(DESCRICAO_DUPLICADA));
         }
-        produtoRepository.save(produto);
+        produtoRepository.save(ProdutoAssembler.toEntity(produtoRequestDto));
     }
 
     public void update(UUID id, ProdutoRequestDTO produtoRequestDto) {
@@ -47,46 +45,18 @@ public class ProdutoService {
             throw new ProdutoDuplicadoException(String.format(DESCRICAO_DUPLICADA));
         }
 
-        produto.builder()
-                .ativo(produtoRequestDto.getAtivo())
-                .nome(produtoRequestDto.getNome())
-                .categoria(produtoRequestDto.getCategoria())
-                .preco(produtoRequestDto.getPreco())
-                .build();
-        produtoRepository.save(produto);
+        produtoRepository.save(ProdutoAssembler.toEntity(id,produtoRequestDto));
     }
 
     public ProdutoResponseDTO findById(UUID id) {
         Produto produto = produtoRepository.findById(id).orElseThrow(() -> new ElementoNencontradoException(String.format(PRODUTO_NENCONTRADO)));
-
-        return ProdutoResponseDTO.builder()
-                .estoque(produto.getEstoque())
-                .nome(produto.getNome())
-                .ativo(produto.getAtivo())
-                .preco(produto.getPreco())
-                .categoria(produto.getCategoria())
-                .embalagem(getEmbalagemAsDTO(produto.getEmbalagem()))
-                .build();
+        return ProdutoAssembler.toResponseModel(produto);
     }
 
     public List<ProdutoResponseDTO> findAll() {
 
-        return produtoRepository.findAll().stream()
-                .map(produto -> {
-                    ProdutoResponseDTO dto = new ProdutoResponseDTO();
-                    dto.setNome(produto.getNome());
-                    dto.setEstoque(produto.getEstoque());
-                    dto.setCategoria(produto.getCategoria());
-                    dto.setPreco(produto.getPreco());
-                    dto.setAtivo(produto.getAtivo());
-                    dto.setEmbalagem(getEmbalagemAsDTO(produto.getEmbalagem()));
-                    return dto;
-                }).toList();
-    }
-
-    public List<Produto> consultaFiltro(String nome, Boolean ativo) {
-
-        return produtoRepository.findAllByNomeContainingAndAtivo(nome, ativo);
+        List<Produto> produtos = produtoRepository.findAll();
+        return ProdutoAssembler.toListResponseModel(produtos);
     }
 
     public String deleteporId(UUID id) {
@@ -97,17 +67,4 @@ public class ProdutoService {
         return ("Produto deletado:" + id);
     }
 
-    public List<EmbalagemResponseDTO> getEmbalagemAsDTO(List<Embalagem> embalagem) {
-        List<EmbalagemResponseDTO> listEmbalagem = new ArrayList<>();
-        if (embalagem != null) {
-            for (int i = 0; i < embalagem.size(); i++) {
-                EmbalagemResponseDTO embalagemResponseDTO = EmbalagemResponseDTO.builder()
-                        .nome(embalagem.get(i).getNome())
-                        .build();
-
-                listEmbalagem.add(embalagemResponseDTO);
-            }
-        }
-        return listEmbalagem;
-    }
 }

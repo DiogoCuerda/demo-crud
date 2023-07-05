@@ -1,8 +1,10 @@
 package com.api.democrud.model;
 
 
+import com.api.democrud.repository.ProdutoRepository;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 @Table(name = "tb_embalagem")
 public class Embalagem implements Serializable {
 
@@ -26,5 +29,8 @@ public class Embalagem implements Serializable {
     @JoinColumn(name = "produto_id")
     private Produto produto;
 
-
+    public Embalagem(String nome, Produto produto) {
+        this.nome = nome;
+        this.produto = produto;
+    }
 }

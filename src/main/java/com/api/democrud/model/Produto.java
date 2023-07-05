@@ -53,6 +53,23 @@ public class Produto implements Serializable {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dataRegistro;
 
+    public Produto(String nome, Integer estoque, Boolean ativo, BigDecimal preco, CategoriaProdutoEnum categoria) {
+        this.nome = nome;
+        this.estoque = estoque;
+        this.ativo = ativo;
+        this.preco = preco;
+        this.categoria = categoria;
+    }
+
+    public Produto(UUID id, String nome, Integer estoque, Boolean ativo, BigDecimal preco, CategoriaProdutoEnum categoria) {
+        this.id = id;
+        this.nome = nome;
+        this.estoque = estoque;
+        this.ativo = ativo;
+        this.preco = preco;
+        this.categoria = categoria;
+    }
+
     @PrePersist
     public void prePersist(){
         this.dataRegistro = LocalDateTime.now();

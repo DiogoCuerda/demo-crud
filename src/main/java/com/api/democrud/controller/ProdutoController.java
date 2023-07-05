@@ -45,18 +45,6 @@ public class ProdutoController {
         produtoService.update(id, produtoRequestDto);
     }
 
-//    @GetMapping()
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<Produto> getProdutos(@RequestParam(defaultValue = "") String descricao,
-//                                     @RequestParam(defaultValue = "") Boolean ativo){
-//        if((ativo == null)&&(descricao.equals("")))
-//        {
-//         //   return produtoService.consultaTodos();
-//        }
-//
-//        return produtoService.consultaFiltro(descricao,ativo);
-//    }
-
     @GetMapping
     public List<ProdutoResponseDTO> findAll(){
         return produtoService.findAll();
