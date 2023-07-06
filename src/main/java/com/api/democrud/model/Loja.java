@@ -33,6 +33,11 @@ public class Loja implements Serializable {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dataRegistro;
 
+    public Loja(String nome, Double credito) {
+        this.nome = nome;
+        this.credito = credito;
+    }
+
     @PrePersist
     public void prePersist(){
         this.dataRegistro = LocalDateTime.now();

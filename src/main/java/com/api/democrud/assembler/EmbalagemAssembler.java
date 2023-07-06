@@ -18,11 +18,12 @@ import java.util.UUID;
 @NoArgsConstructor
 public class EmbalagemAssembler {
 
-    public static Embalagem toEntity(EmbalagemRequestDTO dto,Produto produto){
-        return new Embalagem(dto.getNome(),produto);
+    public static Embalagem toEntity(EmbalagemRequestDTO dto, ProdutoRepository produtoRepository) {
+        return new Embalagem(dto.getNome(), produtoRepository.findById(dto.getProdutoId())
+                .orElseThrow(() -> new ElementoNencontradoException("Produto não encontrado.")));
     }
 
-    public static EmbalagemResponseDTO toResponseModel(Embalagem embalagem){
+    public static EmbalagemResponseDTO toResponseModel(Embalagem embalagem) {
         return new EmbalagemResponseDTO(embalagem.getNome());
     }
 
