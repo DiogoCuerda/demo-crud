@@ -17,10 +17,6 @@ public class ProdutoAssembler {
         return new Produto(dto.getNome(),dto.getEstoque(),dto.getAtivo(),dto.getPreco(),dto.getCategoria());
     }
 
-    public static Produto toEntity(UUID id, ProdutoRequestDTO dto){
-        return new Produto(id,dto.getNome(),dto.getEstoque(),dto.getAtivo(),dto.getPreco(),dto.getCategoria());
-    }
-
     public static ProdutoResponseDTO toResponseModel(Produto produto){
         return new ProdutoResponseDTO(produto.getNome(),produto.getPreco(),produto.getEstoque(),produto.getAtivo(),produto.getCategoria(),setListOf(produto.getEmbalagem()));
     }

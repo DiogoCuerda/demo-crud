@@ -22,17 +22,13 @@ public class EmbalagemService {
     private final ProdutoRepository produtoRepository;
 
     public EmbalagemResponseDTO save(EmbalagemRequestDTO embalagemRequestDTO) {
-        return EmbalagemAssembler.toResponseModel(embalagemRepository.save(EmbalagemAssembler.toEntity(embalagemRequestDTO, produtoRepository)));
-//        Produto produto = produtoRepository.findById(embalagemRequestDTO.getProdutoId())
-//                .orElseThrow(() -> new ElementoNencontradoException("Produto não encontrado."));
-//        Embalagem embalagem = embalagemRepository.save(EmbalagemAssembler.toEntity(embalagemRequestDTO,produto));
-
-
-        //return EmbalagemAssembler.toResponseModel(embalagem);
+        Produto produto = produtoRepository.findById(embalagemRequestDTO.getProdutoId())
+                .orElseThrow(()-> new ElementoNencontradoException("Produto não encontrado"));
+        return EmbalagemAssembler.toResponseModel(embalagemRepository.save(EmbalagemAssembler.toEntity(embalagemRequestDTO, produto)));
     }
 
     public void delete(UUID id) {
-        Embalagem embalagem = embalagemRepository.getById(id);
+        Embalagem embalagem = embalagemRepository.findById(id).orElseThrow(()-> new ElementoNencontradoException("Embalagem não encontrada"));
         embalagemRepository.delete(embalagem);
     }
 }

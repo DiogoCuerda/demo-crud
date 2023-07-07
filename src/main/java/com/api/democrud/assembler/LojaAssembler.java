@@ -24,19 +24,17 @@ public class LojaAssembler {
                 .map(LojaAssembler::toResponseModel).toList();
     }
 
-    public static Loja toEntity(LojaRequestDTO lojaRequestDTO, ProdutoRepository produtoRepository) {
+    public static Loja toEntity(LojaRequestDTO lojaRequestDTO, List<Produto> produtos) {
 
         Loja loja = new Loja(lojaRequestDTO.getNome(), lojaRequestDTO.getCredito());
-
-        List<Produto> produtos = lojaRequestDTO.getProdutos().stream()
-                .map(id -> {
-                    Produto produto = produtoRepository.findById(id).orElseThrow(() -> new ElementoNencontradoException("Produto não encontrado"));
+        produtos = produtos.stream()
+                .map(produto -> {
                     produto.getLoja().add(loja);
                     return produto;
                 }).toList();
-
         loja.setProduto(produtos);
         return loja;
+
     }
 
     public static List<ProdutoResponseDTO> setListofProdutoResponse(List<Produto> produtos) {

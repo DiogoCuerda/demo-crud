@@ -16,8 +16,12 @@ public class ProdutoRequestDTO {
 
     @NotBlank
     private String nome;
+
+    @NotNull
+    private BigDecimal preco;
+
     private Integer estoque;
     private Boolean ativo;
-    private BigDecimal preco;
     private CategoriaProdutoEnum categoria;
+
 }

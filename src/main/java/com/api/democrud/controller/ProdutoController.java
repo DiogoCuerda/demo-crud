@@ -3,7 +3,6 @@ package com.api.democrud.controller;
 
 import com.api.democrud.dto.request.ProdutoRequestDTO;
 import com.api.democrud.dto.response.ProdutoResponseDTO;
-import com.api.democrud.model.Produto;
 import com.api.democrud.service.ProdutoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +23,7 @@ public class ProdutoController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void saveProduto(@Valid @RequestBody ProdutoRequestDTO produtoRequestDto) {
-        produtoService.salvar(produtoRequestDto);
+        produtoService.save(produtoRequestDto);
     }
 
     @GetMapping("/{id}")
@@ -34,8 +33,8 @@ public class ProdutoController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String deleteById(@PathVariable UUID id) {
-        return produtoService.deleteporId(id);
+    public void deleteById(@PathVariable UUID id) {
+        produtoService.deleteById(id);
     }
 
     @PutMapping("/{id}")

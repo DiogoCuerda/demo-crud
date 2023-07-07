@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -24,7 +25,7 @@ public class Loja implements Serializable {
     private UUID id;
 
     private String nome;
-    private Double credito;
+    private BigDecimal credito;
 
     @ManyToMany(mappedBy = "loja",  cascade = { CascadeType.ALL })
     private List<Produto> produto;
@@ -33,7 +34,7 @@ public class Loja implements Serializable {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dataRegistro;
 
-    public Loja(String nome, Double credito) {
+    public Loja(String nome, BigDecimal credito) {
         this.nome = nome;
         this.credito = credito;
     }

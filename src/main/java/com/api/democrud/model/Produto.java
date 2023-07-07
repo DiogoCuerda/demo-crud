@@ -40,7 +40,7 @@ public class Produto implements Serializable {
     private Integer estoque;
     private Boolean ativo;
 
-    @NotNull
+
     private BigDecimal preco;
 
     @Enumerated(EnumType.STRING)
@@ -70,36 +70,17 @@ public class Produto implements Serializable {
         this.categoria = categoria;
     }
 
-    public Produto(UUID id, String nome, Integer estoque, Boolean ativo, BigDecimal preco, CategoriaProdutoEnum categoria) {
-        this.id = id;
-        this.nome = nome;
-        this.estoque = estoque;
-        this.ativo = ativo;
-        this.preco = preco;
-        this.categoria = categoria;
+    public void update(Produto produto){
+        this.nome = produto.getNome();
+        this.estoque = produto.getEstoque();
+        this.ativo = produto.getAtivo();
+        this.preco = produto.getPreco();
+        this.categoria = produto.getCategoria();
     }
 
     @PrePersist
     public void prePersist(){
         this.dataRegistro = LocalDateTime.now();
     }
-
-//    @JsonIgnore
-//    public List<EmbalagemResponseDTO> getEmbalagems(){
-//        List<EmbalagemResponseDTO> listEmbalagem = new ArrayList<EmbalagemResponseDTO>();
-//        if (embalagem != null){
-//            for(int i = 0; i < embalagem.size(); i++){
-//               EmbalagemResponseDTO embalagemResponseDTO = EmbalagemResponseDTO.builder()
-//                       .id(embalagem.get(i).getId())
-//                       .nome(embalagem.get(i).getNome())
-//                       .build();
-//
-//               listEmbalagem.add(embalagemResponseDTO);
-//            }
-//
-//        }
-//       return  listEmbalagem;
-//    }
-
 
 }
