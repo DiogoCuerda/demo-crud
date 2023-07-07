@@ -1,5 +1,6 @@
 package com.api.democrud.model;
 
+import com.api.democrud.dto.request.LojaRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,6 +38,18 @@ public class Loja implements Serializable {
     public Loja(String nome, BigDecimal credito) {
         this.nome = nome;
         this.credito = credito;
+    }
+
+    public void update(Loja loja){
+        this.nome = loja.getNome();
+        this.credito = loja.getCredito();
+        this.produto = loja.getProduto();
+    }
+
+    public void update(String nome, BigDecimal credito, List<Produto> produto){
+        this.nome = nome;
+        this.credito = credito;
+        this.produto = produto;
     }
 
     @PrePersist

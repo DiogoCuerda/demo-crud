@@ -40,7 +40,6 @@ public class ProdutoController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable UUID id, @RequestBody @Valid ProdutoRequestDTO produtoRequestDto) {
-
         produtoService.update(id, produtoRequestDto);
     }
 

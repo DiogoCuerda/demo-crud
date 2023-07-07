@@ -1,6 +1,7 @@
 package com.api.democrud.model;
 
 
+import com.api.democrud.dto.request.EmbalagemRequestDTO;
 import com.api.democrud.repository.ProdutoRepository;
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,5 +30,10 @@ public class Embalagem implements Serializable {
     public Embalagem(String nome, Produto produto) {
         this.nome = nome;
         this.produto = produto;
+    }
+
+    public void update(Embalagem embalagem) {
+        this.nome = embalagem.getNome();
+        this.produto = embalagem.getProduto();
     }
 }

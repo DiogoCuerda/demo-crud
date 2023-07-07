@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,13 +22,27 @@ public class EmbalagemController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public EmbalagemResponseDTO save(@Valid @RequestBody EmbalagemRequestDTO embalagemRequestDTO) {
-
         return embalagemService.save(embalagemRequestDTO);
     }
 
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@PathVariable UUID id,@Valid @RequestBody EmbalagemRequestDTO embalagemRequestDTO){
+        embalagemService.update(id,embalagemRequestDTO);
+    }
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id){
        embalagemService.delete(id);
+    }
+
+    @GetMapping("/{id}")
+    public EmbalagemResponseDTO findById(@PathVariable UUID id){
+        return embalagemService.findById(id);
+    }
+
+    @GetMapping
+    public List<EmbalagemResponseDTO> findAll(){
+        return embalagemService.findAll();
     }
 }
