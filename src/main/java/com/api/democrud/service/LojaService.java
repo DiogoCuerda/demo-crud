@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,31 +41,27 @@ public class LojaService {
 
     public void update(UUID id, LojaRequestDTO lojaRequestDTO) {
 
-       Loja lojaExistente = lojaRepository.findById(id).orElseThrow(()-> new ElementoNencontradoException("Loja não encontrada"));
-       List<Produto> produtos = lojaRequestDTO.getProdutos().stream()
+        Loja lojaExistente = lojaRepository.findById(id).orElseThrow(()-> new ElementoNencontradoException("Loja não encontrada"));
+        List<Produto> produtos = lojaRequestDTO.getProdutos().stream()
                 .map(uuidProduto -> produtoRepository.findById(uuidProduto)
-                       .orElseThrow(() -> new ElementoNencontradoException("Produto não encontrado"))).toList();
-       Loja loja = new Loja();
-       loja.setNome(lojaRequestDTO.getNome());
-       loja.setCredito(lojaRequestDTO.getCredito());
-//       produtos = produtos.stream()
-//                .map(produto -> {produto.getLoja().add(loja);return produto;}).toList();
-       loja.setProduto(produtos);
+                      .orElseThrow(() -> new ElementoNencontradoException("Produto não encontrado"))).collect(Collectors.toList());
+        Loja loja = LojaAssembler.toEntity(lojaRequestDTO,produtos);
+        lojaExistente.update(loja);
+        lojaRepository.save(lojaExistente);
 
 
-       lojaExistente.update(loja);
-       lojaRepository.save(lojaExistente);
-
-        //        Loja lojaExistente = lojaRepository.findById(id).orElseThrow(() -> new ElementoNencontradoException("Loja não encontrada"));
-//        List<Produto> produtosExistente = lojaExistente.getProduto().stream()
-//                .map(produtoExistenteMap -> produtoRepository.findById(produtoExistenteMap.getId())
-//                        .orElseThrow(() -> new ElementoNencontradoException("Produto não encontrado"))).toList();
-//
-//        List<Produto> produtos = lojaRequestDTO.getProdutos().stream()
+        //       Loja lojaExistente = lojaRepository.findById(id).orElseThrow(()-> new ElementoNencontradoException("Loja não encontrada"));
+//       List<Produto> produtos = lojaRequestDTO.getProdutos().stream()
 //                .map(uuidProduto -> produtoRepository.findById(uuidProduto)
-//                        .orElseThrow(() -> new ElementoNencontradoException("Produto não encontrado"))).toList();
+//                       .orElseThrow(() -> new ElementoNencontradoException("Produto não encontrado"))).collect(Collectors.toList());
 //
-//        lojaExistente.update(lojaRequestDTO.getNome(),lojaRequestDTO.getCredito(), produtos);
-//        lojaRepository.save(lojaExistente);
+//       Loja loja = new Loja();
+//       loja.setNome(lojaRequestDTO.getNome());
+//       loja.setCredito(lojaRequestDTO.getCredito());
+//       loja.setProduto(produtos);
+//       lojaExistente.update(loja);
+//       lojaRepository.save(lojaExistente);
+
+
     }
 }

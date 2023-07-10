@@ -23,13 +23,7 @@ public class LojaAssembler {
     }
 
     public static Loja toEntity(LojaRequestDTO lojaRequestDTO, List<Produto> produtos) {
-
         Loja loja = new Loja(lojaRequestDTO.getNome(), lojaRequestDTO.getCredito());
-        produtos = produtos.stream()
-                .map(produto -> {
-                    produto.getLoja().add(loja);
-                    return produto;
-                }).toList();
         loja.setProduto(produtos);
         return loja;
     }
