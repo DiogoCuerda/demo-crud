@@ -28,7 +28,15 @@ public class Loja implements Serializable {
     private String nome;
     private BigDecimal credito;
 
-    @ManyToMany(mappedBy = "loja",  cascade = { CascadeType.ALL })
+//    @ManyToMany(mappedBy = "loja",  cascade = { CascadeType.ALL })
+
+    @ManyToMany(cascade = {
+            CascadeType.ALL
+    })
+    @JoinTable(
+            name = "tb_produtoloja",
+            joinColumns = @JoinColumn(name = "loja_id"),
+            inverseJoinColumns = @JoinColumn(name = "produto_id"))
     private List<Produto> produto;
 
     @Column(name = "data_registro")

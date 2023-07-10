@@ -39,6 +39,7 @@ public class LojaService {
     }
 
     public void update(UUID id, LojaRequestDTO lojaRequestDTO) {
+
        Loja lojaExistente = lojaRepository.findById(id).orElseThrow(()-> new ElementoNencontradoException("Loja não encontrada"));
        List<Produto> produtos = lojaRequestDTO.getProdutos().stream()
                 .map(uuidProduto -> produtoRepository.findById(uuidProduto)
@@ -46,8 +47,8 @@ public class LojaService {
        Loja loja = new Loja();
        loja.setNome(lojaRequestDTO.getNome());
        loja.setCredito(lojaRequestDTO.getCredito());
-       produtos = produtos.stream()
-                .map(produto -> {produto.getLoja().add(loja);return produto;}).toList();
+//       produtos = produtos.stream()
+//                .map(produto -> {produto.getLoja().add(loja);return produto;}).toList();
        loja.setProduto(produtos);
 
 
