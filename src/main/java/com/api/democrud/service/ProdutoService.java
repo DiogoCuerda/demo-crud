@@ -56,7 +56,7 @@ public class ProdutoService {
         return ProdutoAssembler.toListResponseModel(produtos);
     }
 
-    public void deleteById(UUID id) {
+    public void delete(UUID id) {
         Produto produto = produtoRepository.findById(id)
                 .orElseThrow(() -> new ElementoNencontradoException(String.format(PRODUTO_NENCONTRADO)));
         produtoRepository.delete(produto);

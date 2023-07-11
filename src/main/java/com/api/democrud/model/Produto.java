@@ -39,17 +39,25 @@ public class Produto implements Serializable {
     private String nome;
     private Integer estoque;
     private Boolean ativo;
-
-
     private BigDecimal preco;
 
     @Enumerated(EnumType.STRING)
     private CategoriaProdutoEnum categoria;
 
-    @OneToMany(mappedBy = "produto",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Embalagem> embalagem;
 
-    @ManyToMany(mappedBy = "produto",  cascade = { CascadeType.ALL })
+    @ManyToMany(cascade =
+            {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            })
+    @JoinTable(
+            name = "tb_produtoloja",
+            joinColumns = @JoinColumn(name = "produto_id"),
+            inverseJoinColumns = @JoinColumn(name = "loja_id"))
     private List<Loja> loja;
 
     @Column(name = "data_registro")
@@ -64,7 +72,7 @@ public class Produto implements Serializable {
         this.categoria = categoria;
     }
 
-    public void update(Produto produto){
+    public void update(Produto produto) {
         this.nome = produto.getNome();
         this.estoque = produto.getEstoque();
         this.ativo = produto.getAtivo();
@@ -73,7 +81,7 @@ public class Produto implements Serializable {
     }
 
     @PrePersist
-    public void prePersist(){
+    public void prePersist() {
         this.dataRegistro = LocalDateTime.now();
     }
 

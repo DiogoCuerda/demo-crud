@@ -49,19 +49,9 @@ public class LojaService {
         lojaExistente.update(loja);
         lojaRepository.save(lojaExistente);
 
-
-        //       Loja lojaExistente = lojaRepository.findById(id).orElseThrow(()-> new ElementoNencontradoException("Loja não encontrada"));
-//       List<Produto> produtos = lojaRequestDTO.getProdutos().stream()
-//                .map(uuidProduto -> produtoRepository.findById(uuidProduto)
-//                       .orElseThrow(() -> new ElementoNencontradoException("Produto não encontrado"))).collect(Collectors.toList());
-//
-//       Loja loja = new Loja();
-//       loja.setNome(lojaRequestDTO.getNome());
-//       loja.setCredito(lojaRequestDTO.getCredito());
-//       loja.setProduto(produtos);
-//       lojaExistente.update(loja);
-//       lojaRepository.save(lojaExistente);
-
-
+    }
+    public void delete(UUID id) {
+        Loja loja = lojaRepository.findById(id).orElseThrow(()-> new ElementoNencontradoException("Loja não encontrada"));
+        lojaRepository.delete(loja);
     }
 }

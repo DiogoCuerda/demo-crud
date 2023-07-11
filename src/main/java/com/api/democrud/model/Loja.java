@@ -27,11 +27,13 @@ public class Loja implements Serializable {
     private String nome;
     private BigDecimal credito;
 
-//    @ManyToMany(mappedBy = "loja",  cascade = { CascadeType.ALL })
-
-    @ManyToMany(cascade = {
-            CascadeType.ALL
-    })
+    @ManyToMany(cascade =
+            {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            })
     @JoinTable(
             name = "tb_produtoloja",
             joinColumns = @JoinColumn(name = "loja_id"),
@@ -51,12 +53,6 @@ public class Loja implements Serializable {
         this.nome = loja.getNome();
         this.credito = loja.getCredito();
         this.produto = loja.getProduto();
-    }
-
-    public void update(String nome, BigDecimal credito, List<Produto> produto){
-        this.nome = nome;
-        this.credito = credito;
-        this.produto = produto;
     }
 
     @PrePersist

@@ -39,4 +39,10 @@ public class LojaController {
     public List<LojaResponseDTO> findAll(){
         return lojaService.findAll();
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable UUID id){
+        lojaService.delete(id);
+    }
 }

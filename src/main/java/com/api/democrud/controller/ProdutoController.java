@@ -22,7 +22,7 @@ public class ProdutoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveProduto(@Valid @RequestBody ProdutoRequestDTO produtoRequestDto) {
+    public void save(@Valid @RequestBody ProdutoRequestDTO produtoRequestDto) {
         produtoService.save(produtoRequestDto);
     }
 
@@ -33,8 +33,8 @@ public class ProdutoController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteById(@PathVariable UUID id) {
-        produtoService.deleteById(id);
+    public void delete(@PathVariable UUID id) {
+        produtoService.delete(id);
     }
 
     @PutMapping("/{id}")
