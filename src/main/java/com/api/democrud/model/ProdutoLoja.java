@@ -15,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "tb_produtoloja")
+@Table(name = "tb_produto_loja")
 public class ProdutoLoja implements Serializable {
 
     @EmbeddedId

@@ -21,12 +21,12 @@ INSERT INTO tb_loja(id,nome,credito) VALUES
 ('ca81274e-6518-4bd9-8035-060aaa9af1f0','Mercado',56998.56),
 ('9518f5b5-bb56-467e-b877-61cc51037886','Padaria',1242.69);
 
-INSERT INTO tb_produtoloja(produto_id,loja_id) VALUES
+INSERT INTO tb_produto_loja(produto_id,loja_id) VALUES
 ('20bfdbf2-4b64-452e-8376-c2a230ef6265','ca81274e-6518-4bd9-8035-060aaa9af1f0'),
 ('f07db05a-639d-4d4b-b0c3-1114214340cb','ca81274e-6518-4bd9-8035-060aaa9af1f0'),
 ('c50bb329-5be3-431c-b623-050b163df16a','ca81274e-6518-4bd9-8035-060aaa9af1f0');
 
-INSERT INTO tb_produtoloja(produto_id,loja_id) VALUES
+INSERT INTO tb_produto_loja(produto_id,loja_id) VALUES
 ('20bfdbf2-4b64-452e-8376-c2a230ef6265','9518f5b5-bb56-467e-b877-61cc51037886'),
 ('c50bb329-5be3-431c-b623-050b163df16a','9518f5b5-bb56-467e-b877-61cc51037886');
 

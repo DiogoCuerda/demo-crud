@@ -20,32 +20,29 @@ import static com.api.democrud.exception.CustomExceptionHandler.USUARIO_NENCONTR
 public class ApplicationConfig {
 
     private final UsuarioRepository repository;
+
     @Bean
-    public UserDetailsService userDetailsService(){
-        return nome ->  repository.findByNome(nome)
+    public UserDetailsService userDetailsService() {
+        return nome -> repository.findByNome(nome)
                 .orElseThrow(() -> new ElementoNencontradoException(String.format(USUARIO_NENCONTRADO)));
     }
 
     @Bean
-    public AuthenticationProvider autenticationProvider(){
+    public AuthenticationProvider autenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService());
         authProvider.setPasswordEncoder(passwordEncoder());
-        System.out.println(passwordEncoder().encode("admin"));
         return authProvider;
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception{
-
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
-
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
-
         return new BCryptPasswordEncoder();
-
     }
 
 }
