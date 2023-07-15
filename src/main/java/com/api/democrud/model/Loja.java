@@ -44,9 +44,10 @@ public class Loja implements Serializable {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dataRegistro;
 
-    public Loja(String nome, BigDecimal credito) {
+    public Loja(String nome, BigDecimal credito, List<Produto> produto) {
         this.nome = nome;
         this.credito = credito;
+        this.produto = produto;
     }
 
     public void update(Loja loja){

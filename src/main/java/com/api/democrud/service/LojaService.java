@@ -22,13 +22,12 @@ public class LojaService {
     private final LojaRepository lojaRepository;
     private final ProdutoRepository produtoRepository;
 
-    public LojaResponseDTO save(LojaRequestDTO lojaRequestDTO) {
+    public Loja save(LojaRequestDTO lojaRequestDTO) {
         List<Produto> produtos = lojaRequestDTO.getProdutos().stream()
-                .map(id -> {
-                    Produto produto = produtoRepository.findById(id).orElseThrow(() -> new ElementoNencontradoException("Produto não encontrado"));
-                    return produto;
-                }).toList();
-        return LojaAssembler.toResponseModel(lojaRepository.save(LojaAssembler.toEntity(lojaRequestDTO, produtos)));
+                .map(id -> produtoRepository.findById(id).orElseThrow(() -> new ElementoNencontradoException("Produto não encontrado"))).toList();
+        Loja loja = LojaAssembler.toEntity(lojaRequestDTO, produtos);
+
+        return lojaRepository.save(loja);
     }
 
     public List<LojaResponseDTO> findAll() {
@@ -42,13 +41,16 @@ public class LojaService {
     public void update(UUID id, LojaRequestDTO lojaRequestDTO) {
 
         Loja lojaExistente = lojaRepository.findById(id).orElseThrow(()-> new ElementoNencontradoException("Loja não encontrada"));
-        List<Produto> produtos = lojaRequestDTO.getProdutos().stream()
-                .map(uuidProduto -> produtoRepository.findById(uuidProduto)
-                      .orElseThrow(() -> new ElementoNencontradoException("Produto não encontrado"))).collect(Collectors.toList());
+        List<UUID> idsProduto = lojaRequestDTO.getProdutos();
+        List<Produto> produtos = produtoRepository.findAllById(idsProduto);
+
+        if (produtos.size() != idsProduto.size()){
+            throw new ElementoNencontradoException("Produto não encontrado");
+        }
+
         Loja loja = LojaAssembler.toEntity(lojaRequestDTO,produtos);
         lojaExistente.update(loja);
         lojaRepository.save(lojaExistente);
-
     }
     public void delete(UUID id) {
         Loja loja = lojaRepository.findById(id).orElseThrow(()-> new ElementoNencontradoException("Loja não encontrada"));

@@ -23,9 +23,7 @@ public class LojaAssembler {
     }
 
     public static Loja toEntity(LojaRequestDTO lojaRequestDTO, List<Produto> produtos) {
-        Loja loja = new Loja(lojaRequestDTO.getNome(), lojaRequestDTO.getCredito());
-        loja.setProduto(produtos);
-        return loja;
+        return new Loja(lojaRequestDTO.getNome(), lojaRequestDTO.getCredito(), produtos);
     }
 
     public static List<ProdutoResponseDTO> setListofProdutoResponse(List<Produto> produtos) {

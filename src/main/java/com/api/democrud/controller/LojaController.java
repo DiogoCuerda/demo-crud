@@ -7,8 +7,11 @@ import com.api.democrud.service.LojaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,9 +23,14 @@ public class LojaController {
 
     private final LojaService lojaService;
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public LojaResponseDTO save(@Valid @RequestBody LojaRequestDTO lojaRequestDTO){
-      return lojaService.save(lojaRequestDTO);
+    public ResponseEntity<LojaResponseDTO> save(@Valid @RequestBody LojaRequestDTO lojaRequestDTO){
+        Loja loja = lojaService.save(lojaRequestDTO);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(loja.getId())
+                .toUri();
+        return ResponseEntity.created(location).build();
     }
 
     @PutMapping("/{id}")
