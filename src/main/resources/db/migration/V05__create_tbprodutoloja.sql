@@ -5,7 +5,7 @@ credito NUMERIC(10,2),
 data_registro TIMESTAMP
 );
 
-CREATE TABLE tb_produtoloja(
+CREATE TABLE tb_produto_loja(
 produto_id UUID,
 loja_id UUID,
 estoque INT,

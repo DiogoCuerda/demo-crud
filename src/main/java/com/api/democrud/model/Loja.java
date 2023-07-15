@@ -35,7 +35,7 @@ public class Loja implements Serializable {
                     CascadeType.PERSIST
             })
     @JoinTable(
-            name = "tb_produtoloja",
+            name = "tb_produto_loja",
             joinColumns = @JoinColumn(name = "loja_id"),
             inverseJoinColumns = @JoinColumn(name = "produto_id"))
     private List<Produto> produto;
