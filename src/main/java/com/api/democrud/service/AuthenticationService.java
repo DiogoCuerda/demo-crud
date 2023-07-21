@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -30,12 +31,16 @@ public class AuthenticationService {
 
     public AutenticationResponse authenticate(AutenticationRequest request) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(request.getNome(), request.getSenha());
-        System.out.println("pass: " + passwordEncoder.encode(request.getSenha()));
-        System.out.println(usernamePasswordAuthenticationToken.toString());
+      //  System.out.println("pass: " + passwordEncoder.encode(request.getSenha()));
+      //  System.out.println(usernamePasswordAuthenticationToken.toString());
+        HashMap claims = new HashMap<>();
+
         authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         var usuario = usuarioRepository.findByNome(request.getNome()).orElseThrow();
-        var jwtToken = jwtService.generateToken(usuario);
-        var refreshToken = jwtService.generateRefreshToken(usuario);
+        claims.put("tokenType","access");
+        var jwtToken = jwtService.generateToken(claims,usuario);
+        claims.put("tokenType","refresh");
+        var refreshToken = jwtService.generateRefreshToken(claims,usuario);
         return AutenticationResponse.builder().acessToken(jwtToken).refreshToken(refreshToken).build();
     }
 
@@ -43,15 +48,22 @@ public class AuthenticationService {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         final String refreshToken;
         final  String userName;
+        HashMap claims = new HashMap<>();
+        claims.put("tokenType","access");
         if (authHeader == null || !authHeader.startsWith("Bearer ")){
             return;
         }
         refreshToken = authHeader.substring(7);
+
+        if (!jwtService.extractTokenType(refreshToken).equals("refresh"))
+        {
+            return;
+        }
         userName = jwtService.extractUserName(refreshToken);
         if (userName != null){
             var userDetails = this.usuarioRepository.findByNome(userName).orElseThrow(()-> new ElementoNencontradoException("Usuario não encontrado"));
             if (jwtService.isTokenValid(refreshToken,userDetails)){
-                var acessToken = jwtService.generateToken(userDetails);
+                var acessToken = jwtService.generateToken(claims,userDetails);
                 var authResponse = AutenticationResponse.builder()
                         .acessToken(acessToken)
                         .refreshToken(refreshToken)
