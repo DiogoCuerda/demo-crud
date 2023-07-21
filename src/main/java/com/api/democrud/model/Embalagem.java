@@ -4,6 +4,7 @@ package com.api.democrud.model;
 import com.api.democrud.dto.request.EmbalagemRequestDTO;
 import com.api.democrud.repository.ProdutoRepository;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.io.Serializable;
@@ -21,6 +22,7 @@ public class Embalagem implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    @NotNull
     private String nome;
 
     @ManyToOne

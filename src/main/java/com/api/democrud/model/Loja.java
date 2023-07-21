@@ -2,6 +2,7 @@ package com.api.democrud.model;
 
 import com.api.democrud.dto.request.LojaRequestDTO;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -24,7 +25,9 @@ public class Loja implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    @NotNull
     private String nome;
+
     private BigDecimal credito;
 
     @ManyToMany(cascade =

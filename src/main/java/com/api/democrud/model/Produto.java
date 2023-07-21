@@ -36,7 +36,9 @@ public class Produto implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    @NotNull
     private String nome;
+
     private Integer estoque;
     private Boolean ativo;
     private BigDecimal preco;
