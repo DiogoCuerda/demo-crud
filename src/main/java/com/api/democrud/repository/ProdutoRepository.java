@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 
+import java.util.Optional;
 import java.util.UUID;
 import java.util.List;
 
@@ -14,6 +15,8 @@ import java.util.List;
 public interface ProdutoRepository extends JpaRepository<Produto, UUID> {
     boolean existsByNome(String nome);
     boolean existsById(UUID id);
+
+    Optional<Produto> findByNome(String nome);
 
     List<Produto>findAllByNomeContainingAndAtivo(String text, Boolean ativo);
 }

@@ -26,12 +26,12 @@ public class ProdutoService {
     private final ProdutoRepository produtoRepository;
 
     @Transactional
-    public void save(ProdutoRequestDTO produtoRequestDto) {
+    public Produto save(ProdutoRequestDTO produtoRequestDto) {
         if (produtoRepository.existsByNome(produtoRequestDto.getNome())) {
 
             throw new ProdutoDuplicadoException(String.format(DESCRICAO_DUPLICADA));
         }
-        produtoRepository.save(ProdutoAssembler.toEntity(produtoRequestDto));
+       return produtoRepository.save(ProdutoAssembler.toEntity(produtoRequestDto));
     }
 
     public void update(UUID id, ProdutoRequestDTO produtoRequestDto) {

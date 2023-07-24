@@ -27,12 +27,9 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final UsuarioRepository usuarioRepository;
     private final JwtService jwtService;
-    private final PasswordEncoder passwordEncoder;
 
     public AutenticationResponse authenticate(AutenticationRequest request) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(request.getNome(), request.getSenha());
-      //  System.out.println("pass: " + passwordEncoder.encode(request.getSenha()));
-      //  System.out.println(usernamePasswordAuthenticationToken.toString());
         HashMap claims = new HashMap<>();
 
         authenticationManager.authenticate(usernamePasswordAuthenticationToken);

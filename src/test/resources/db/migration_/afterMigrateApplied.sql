@@ -4,12 +4,13 @@ INSERT INTO tb_produto(id,nome,preco,estoque,ativo,categoria,data_registro) VALU
 ('20bfdbf2-4b64-452e-8376-c2a230ef6265','Coca-Cola',8.99,10,TRUE,'REVENDA',current_timestamp),
 ('f07db05a-639d-4d4b-b0c3-1114214340cb','Doritos',  5.89,18,TRUE,'REVENDA',current_timestamp),
 ('c50bb329-5be3-431c-b623-050b163df16a','Presunto',83.21,10,TRUE,'REVENDA',current_timestamp),
-('6698b118-26fc-4541-8d8f-d00945b015c7','toDelete',8.21,10,TRUE,'REVENDA',current_timestamp);
+('6698b118-26fc-4541-8d8f-d00945b015c7','toUpdate',8.21,10,TRUE,'REVENDA',current_timestamp);
 
 INSERT INTO tb_embalagem(id,nome,produto_id) VALUES
 ('4ddbfdfe-ed3c-4307-8519-55bd2a29e8c7','2 Litros','20bfdbf2-4b64-452e-8376-c2a230ef6265'),
 ('52183bd9-6d71-416f-ae89-9a1c915109c5','1 Litro','20bfdbf2-4b64-452e-8376-c2a230ef6265'),
-('bf1d1e97-bd0b-4e88-8775-e6bd89699a62','600 mL','20bfdbf2-4b64-452e-8376-c2a230ef6265');
+('bf1d1e97-bd0b-4e88-8775-e6bd89699a62','600 mL','20bfdbf2-4b64-452e-8376-c2a230ef6265'),
+('2c08d298-2722-4731-9dc3-270f8614a93c','350 mL','20bfdbf2-4b64-452e-8376-c2a230ef6265');
 
 INSERT INTO tb_embalagem(id,nome,produto_id) VALUES
 ('c93f9ae2-1eb1-427d-9cf2-08591385c946','90 gramas','f07db05a-639d-4d4b-b0c3-1114214340cb'),

@@ -10,4 +10,16 @@ services:
       PGDATA: ${PGDATA}
     ports:
       - 1234:5432
- 
+
+  db-test:
+    image: postgres
+    restart: always
+
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB_TEST}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGDATA: ${PGDATA}
+    ports:
+      - 1244:5432
+

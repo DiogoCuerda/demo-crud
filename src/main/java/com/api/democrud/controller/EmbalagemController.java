@@ -21,8 +21,8 @@ public class EmbalagemController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EmbalagemResponseDTO save(@Valid @RequestBody EmbalagemRequestDTO embalagemRequestDTO) {
-        return embalagemService.save(embalagemRequestDTO);
+    public void save(@Valid @RequestBody EmbalagemRequestDTO embalagemRequestDTO) {
+        embalagemService.save(embalagemRequestDTO);
     }
 
     @PutMapping("/{id}")
