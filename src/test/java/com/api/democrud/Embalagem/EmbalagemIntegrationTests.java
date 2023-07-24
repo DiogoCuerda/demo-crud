@@ -3,7 +3,6 @@ package com.api.democrud.Embalagem;
 import com.api.democrud.autentication.AutenticationRequest;
 import com.api.democrud.exception.ElementoNencontradoException;
 import com.api.democrud.model.Embalagem;
-import com.api.democrud.model.Produto;
 import com.api.democrud.repository.EmbalagemRepository;
 import com.api.democrud.service.AuthenticationService;
 import io.restassured.RestAssured;
@@ -11,24 +10,19 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.Optional;
 import java.util.UUID;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ExtendWith(MockitoExtension.class)
-//@SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class EmbalagemIntegrationTests {
 
     @LocalServerPort
@@ -63,28 +57,24 @@ public class EmbalagemIntegrationTests {
         RestAssured.basePath = "/embalagem";
         token = authService.authenticate(new AutenticationRequest("admin", "admin")).getAcessToken();
         RestAssured.port = this.port;
-
-
         flyway.clean();
-       // flyway.baseline();
         flyway.migrate();
     }
 
-//    @Test
-//    void retornarStatus200ConsultarEmbalagem() {
-//
-//        Response response = RestAssured.given()
-//                .header("Authorization", "Bearer " + token)
-//                .and()
-//                .header("Content-Type", ContentType.JSON)
-//                .accept(ContentType.JSON)
-//                .when()
-//                .get()
-//                .then().extract().response();
-//               // .statusCode(HttpStatus.OK.value());
-//
-//        Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
-//    }
+    @Test
+    void retornarStatus200ConsultarEmbalagem() {
+
+        Response response = RestAssured.given()
+                .header("Authorization", "Bearer " + token)
+                .and()
+                .header("Content-Type", ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .get()
+                .then().extract().response();
+
+        Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
+    }
 
     @Test
     void cadastraEmbalagemRetonar201() {
@@ -129,12 +119,13 @@ public class EmbalagemIntegrationTests {
     }
 
     @Test
-    void excluirEmbalagemRetornar204(){
+    void excluirEmbalagemRetornar204() {
         Response response = RestAssured.given()
                 .accept(ContentType.JSON)
                 .header("Authorization", "Bearer " + token)
                 .and()
                 .header("Content-Type", ContentType.JSON)
+                .and()
                 .when()
                 .delete("/" + idEmbalagemDelete)
                 .then()
@@ -142,7 +133,7 @@ public class EmbalagemIntegrationTests {
 
         Optional<Embalagem> embalagem = repository.findById(UUID.fromString(idEmbalagemDelete));
 
-        Assertions.assertEquals(HttpStatus.NO_CONTENT.value(),response.statusCode());
+        Assertions.assertEquals(HttpStatus.NO_CONTENT.value(), response.statusCode());
         Assertions.assertFalse(embalagem.isPresent());
 
     }

@@ -14,13 +14,8 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -33,8 +28,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ExtendWith(MockitoExtension.class)
-//@SpringBootTest
 public class ProdutoIntegrationTests {
 
 
@@ -69,7 +62,7 @@ public class ProdutoIntegrationTests {
     @Autowired
     private AuthenticationService authService1;
 
-    private String token ;
+    private String token;
 
     @BeforeEach
     void setUp() throws InterruptedException {
@@ -79,59 +72,9 @@ public class ProdutoIntegrationTests {
         RestAssured.basePath = "/produto";
         token = authService1.authenticate(new AutenticationRequest("admin", "admin")).getAcessToken();
 
-
         flyway1.clean();
-        //flyway1.baseline();
-       flyway1.migrate();
-
-
+        flyway1.migrate();
     }
-
-
-
-//    @Test
-//    void editarProdutoRetornar204() {
-//
-//        Response response = RestAssured.given()
-//                .accept(ContentType.JSON)
-//                .header("Authorization", "Bearer " + token)
-//                .and()
-//                .header("Content-Type", ContentType.JSON)
-//                .and()
-//                .when()
-//                .delete("/" + idProdutoDelete)
-//                .then()
-//                .extract().response();
-//
-//        Optional<Produto> produto = repository.findByNome("Presunto");
-//
-//        Assertions.assertEquals(HttpStatus.NO_CONTENT.value(), response.statusCode());
-//        Assertions.assertFalse(produto.isPresent());
-//    }
-        //
-//        Response response = RestAssured.given()
-//                .accept(ContentType.JSON)
-//                .header("Authorization", "Bearer " + token)
-//                .and()
-//                .header("Content-Type", ContentType.JSON)
-//                .and()
-//                .body(putRequestBody)
-//                .when()
-//                .put("/" + idProdutoPut)
-//                .then()
-//                .extract().response();
-//
-//        Optional<Produto> produto = repository.findByNome("Cafe");
-//
-//        Assertions.assertEquals(204, response.statusCode());
-//        Assertions.assertTrue(produto.isPresent());
-//        Assertions.assertEquals(produto.get().getNome(), "Cafe");
-//        Assertions.assertEquals(produto.get().getPreco(), BigDecimal.valueOf(7.56));
-//        Assertions.assertEquals(produto.get().getEstoque(), Integer.valueOf(66));
-//        Assertions.assertEquals(produto.get().getAtivo(), false);
-//        Assertions.assertEquals(produto.get().getCategoria().toString(), "MATERIAPRIMA");
-
-
 
     @Test
     void retornarStatus200ConsultarProdutos() {
@@ -150,7 +93,7 @@ public class ProdutoIntegrationTests {
     }
 
     @Test
-     void cadastrarProdutoRetornar201() {
+    void cadastrarProdutoRetornar201() {
 
         Response response = RestAssured.given()
                 .accept(ContentType.JSON)
@@ -167,16 +110,16 @@ public class ProdutoIntegrationTests {
         Produto produto = repository.findByNome("Fanta").orElseThrow(() -> new ElementoNencontradoException("Não encontrado"));
 
         Assertions.assertEquals(HttpStatus.CREATED.value(), response.statusCode());
-        Assertions.assertEquals(produto.getNome(), "Fanta");
-        Assertions.assertEquals(produto.getPreco(), BigDecimal.valueOf(4.56));
-        Assertions.assertEquals(produto.getEstoque(), Integer.valueOf(55));
-        Assertions.assertEquals(produto.getAtivo(), true);
-        Assertions.assertEquals(produto.getCategoria().toString(), "REVENDA");
+        Assertions.assertEquals("Fanta",produto.getNome());
+        Assertions.assertEquals( BigDecimal.valueOf(4.56),produto.getPreco());
+        Assertions.assertEquals(Integer.valueOf(55),produto.getEstoque());
+        Assertions.assertEquals(true,produto.getAtivo());
+        Assertions.assertEquals("REVENDA",produto.getCategoria().toString());
     }
 
 
     @Test
-    void removerProdutoRetornar204() {
+    void excluirProdutoRetornar204() {
         Response response = RestAssured.given()
                 .accept(ContentType.JSON)
                 .header("Authorization", "Bearer " + token)
