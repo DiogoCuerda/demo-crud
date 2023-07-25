@@ -36,7 +36,8 @@ public class Loja implements Serializable {
                     CascadeType.MERGE,
                     CascadeType.REFRESH,
                     CascadeType.PERSIST
-            })
+
+            },fetch=FetchType.EAGER)
     @JoinTable(
             name = "tb_produto_loja",
             joinColumns = @JoinColumn(name = "loja_id"),

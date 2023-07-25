@@ -50,6 +50,7 @@ public class ProdutoIntegrationTests {
             "}";
     private String idProdutoPut = "6698b118-26fc-4541-8d8f-d00945b015c7";
     private String idProdutoDelete = "c50bb329-5be3-431c-b623-050b163df16a";
+    private String token;
     @Autowired
     private ProdutoService service;
 
@@ -62,7 +63,7 @@ public class ProdutoIntegrationTests {
     @Autowired
     private AuthenticationService authService1;
 
-    private String token;
+
 
     @BeforeEach
     void setUp() throws InterruptedException {
