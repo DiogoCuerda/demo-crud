@@ -56,4 +56,8 @@ public class LojaService {
         Loja loja = lojaRepository.findById(id).orElseThrow(()-> new ElementoNencontradoException("Loja não encontrada"));
         lojaRepository.delete(loja);
     }
+
+    public List<LojaResponseDTO> findMaisXProdutos(int numeroProdutos) {
+        return LojaAssembler.toListResponseModel(lojaRepository.findMaisXProdutos(numeroProdutos));
+    }
 }

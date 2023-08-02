@@ -25,12 +25,17 @@ public class Usuario implements UserDetails {
 
     private String nome;
     private String senha;
+    private Boolean readOnly;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ADMIN"));
     }
 
+
+    public Boolean getReadOnly() {
+        return readOnly;
+    }
     @Override
     public String getPassword() {
         return senha;

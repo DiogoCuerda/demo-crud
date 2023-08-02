@@ -6,6 +6,7 @@ import com.api.democrud.dto.response.ProdutoResponseDTO;
 import com.api.democrud.service.ProdutoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,6 +47,11 @@ public class ProdutoController {
     @GetMapping
     public List<ProdutoResponseDTO> findAll() {
         return produtoService.findAll();
+    }
+
+    @GetMapping("/like")
+    public List<ProdutoResponseDTO> findByLikeNome(@RequestParam String nome){
+        return produtoService.findByLikeNome(nome);
     }
 
 }

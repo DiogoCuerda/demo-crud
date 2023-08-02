@@ -18,5 +18,7 @@ public interface ProdutoRepository extends JpaRepository<Produto, UUID> {
 
     Optional<Produto> findByNome(String nome);
 
+    @Query("select u from Produto u where u.nome like %:nome%")
+    List<Produto> findByLikeNome(@Param("nome") String nome);
     List<Produto>findAllByNomeContainingAndAtivo(String text, Boolean ativo);
 }

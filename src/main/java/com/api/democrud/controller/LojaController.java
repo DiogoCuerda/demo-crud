@@ -48,6 +48,11 @@ public class LojaController {
         return lojaService.findAll();
     }
 
+    @GetMapping("/filtro1")
+    public List<LojaResponseDTO> findMaisXProdutos(@RequestParam int numeroProdutos){
+        return lojaService.findMaisXProdutos(numeroProdutos);
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id){

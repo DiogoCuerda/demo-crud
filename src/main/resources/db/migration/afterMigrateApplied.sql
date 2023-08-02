@@ -1,4 +1,7 @@
-INSERT INTO tb_usuario(id,nome,senha) VALUES('f1daca55-6bb0-413b-8bfe-2bfdc8030234','admin','$2a$10$Uw/e2P.ZP/XNIqsLAqorzu56q98AkeCKAfp7ECwVfnL2mwYfWVNrq');
+INSERT INTO tb_usuario(id,nome,senha,read_only) VALUES
+('f1daca55-6bb0-413b-8bfe-2bfdc8030234','admin','$2a$10$Uw/e2P.ZP/XNIqsLAqorzu56q98AkeCKAfp7ECwVfnL2mwYfWVNrq',FALSE),
+('34cfdea3-64c7-4e34-86d9-f43fc5773318','diogo','$2a$10$Uw/e2P.ZP/XNIqsLAqorzu56q98AkeCKAfp7ECwVfnL2mwYfWVNrq',TRUE);
+
 
 INSERT INTO tb_produto(id,nome,preco,estoque,ativo,categoria,data_registro) VALUES
 ('20bfdbf2-4b64-452e-8376-c2a230ef6265','Coca-Cola',8.99,10,TRUE,'REVENDA',current_timestamp),

@@ -62,4 +62,8 @@ public class ProdutoService {
         produtoRepository.delete(produto);
     }
 
+    public List<ProdutoResponseDTO> findByLikeNome(String nome) {
+         List<Produto> produtos = produtoRepository.findByLikeNome(nome);
+         return ProdutoAssembler.toListResponseModel(produtos);
+    }
 }

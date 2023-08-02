@@ -52,7 +52,7 @@ public class AuthenticationService {
         }
         refreshToken = authHeader.substring(7);
 
-        if (!jwtService.extractTokenType(refreshToken).equals("refresh"))
+        if (!jwtService.isRefreshToken(refreshToken))
         {
             return;
         }

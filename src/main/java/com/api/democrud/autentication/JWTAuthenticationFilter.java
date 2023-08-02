@@ -1,5 +1,7 @@
 package com.api.democrud.autentication;
 
+import com.api.democrud.exception.CustomExceptionHandler;
+import com.api.democrud.exception.NaoAutorizadoException;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -8,6 +10,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.Null;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,22 +33,22 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
-                                    @NonNull FilterChain filterChain) throws ServletException, IOException {
+                                    @NonNull FilterChain filterChain) throws ServletException, IOException, NaoAutorizadoException {
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userName;
-        final String tokenType;
         if (authHeader == null || !authHeader.startsWith("Bearer ")){
             filterChain.doFilter(request,response);
             return;
         }
         jwt = authHeader.substring(7);
         userName = jwtService.extractUserName(jwt);
-        tokenType = jwtService.extractTokenType(jwt);
-        if (tokenType.equals("refresh")){
-            filterChain.doFilter(request,response);
+
+        if (jwtService.isRefreshToken(jwt))
             return;
-        }
+
+        if (!request.getMethod().equals(HttpMethod.GET.name()) && jwtService.isReadOnly(jwt))
+            throw new NaoAutorizadoException(CustomExceptionHandler.USUARIO_SOMENTE_LEITURA);
 
         if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userName);
