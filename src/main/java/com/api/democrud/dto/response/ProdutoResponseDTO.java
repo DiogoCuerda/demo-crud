@@ -17,13 +17,12 @@ import java.util.UUID;
 @Builder
 public class ProdutoResponseDTO {
 
-    //private UUID id;
+    private UUID id;
     private String nome;
     private BigDecimal preco;
     private Integer estoque;
     private Boolean ativo;
     private CategoriaProdutoEnum categoria;
     private List<EmbalagemResponseDTO> embalagem;
-    //private List<UUID> embalagem;
 
 }

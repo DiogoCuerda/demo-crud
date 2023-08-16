@@ -19,13 +19,13 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService service;
-    @GetMapping("/authenticate")
+    @PostMapping("/authenticate")
     public ResponseEntity<AutenticationResponse> register(@RequestBody AutenticationRequest request){
          return ResponseEntity.ok(service.authenticate(request));
 
     }
 
-    @GetMapping("/refresh-token")
+    @PostMapping("/refresh-token")
     public void register(HttpServletRequest request, HttpServletResponse response) throws IOException {
       service.refreshToken(request, response);
     }

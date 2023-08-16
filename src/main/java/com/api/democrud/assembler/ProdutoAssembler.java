@@ -18,7 +18,7 @@ public class ProdutoAssembler {
     }
 
     public static ProdutoResponseDTO toResponseModel(Produto produto){
-        return new ProdutoResponseDTO(produto.getNome(),produto.getPreco(),produto.getEstoque(),produto.getAtivo(),produto.getCategoria(),setListOf(produto.getEmbalagem()));
+        return new ProdutoResponseDTO(produto.getId(),produto.getNome(),produto.getPreco(),produto.getEstoque(),produto.getAtivo(),produto.getCategoria(),setListOf(produto.getEmbalagem()));
     }
 
     public static List<ProdutoResponseDTO> toListResponseModel(List<Produto> produtos){
