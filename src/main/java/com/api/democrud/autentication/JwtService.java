@@ -76,9 +76,6 @@ public class JwtService {
     }
 
 
-//    public String extractTokenType(String token) {
-//        return extractClaim(token, (claim) -> claim.get("tokenType", String.class));
-//    }
     public boolean isReadOnly(String token) {
       return (extractClaim(token, (claims -> claims.get("readOnly", Boolean.class))));
     }

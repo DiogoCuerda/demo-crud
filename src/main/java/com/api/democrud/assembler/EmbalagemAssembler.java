@@ -18,7 +18,7 @@ public class EmbalagemAssembler {
     }
 
     public static EmbalagemResponseDTO toResponseModel(Embalagem embalagem) {
-        return new EmbalagemResponseDTO(embalagem.getNome());
+        return new EmbalagemResponseDTO(embalagem.getId(),embalagem.getNome(),embalagem.getProduto().getId());
     }
 
     public static List<EmbalagemResponseDTO> toListResponseModel(List<Embalagem> embalagems) {

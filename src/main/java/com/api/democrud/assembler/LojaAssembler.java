@@ -30,6 +30,7 @@ public class LojaAssembler {
         return produtos.stream()
                 .map(produto -> {
                     ProdutoResponseDTO produtoResponseDTO = new ProdutoResponseDTO();
+                    produtoResponseDTO.setId(produto.getId());
                     produtoResponseDTO.setNome(produto.getNome());
                     produtoResponseDTO.setCategoria(produto.getCategoria());
                     produtoResponseDTO.setPreco(produto.getPreco());
