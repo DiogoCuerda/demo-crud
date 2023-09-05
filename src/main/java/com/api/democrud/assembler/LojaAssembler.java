@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class LojaAssembler {
     public static LojaResponseDTO toResponseModel(Loja loja) {
-        return new LojaResponseDTO(loja.getNome(), loja.getCredito(), setListofProdutoResponse(loja.getProduto()));
+        return new LojaResponseDTO(loja.getId(),loja.getNome(), loja.getCredito(), setListofProdutoResponse(loja.getProduto()));
     }
 
     public static List<LojaResponseDTO> toListResponseModel(List<Loja> loja) {
