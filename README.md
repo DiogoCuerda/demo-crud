@@ -17,3 +17,5 @@ Esquema de Autenticação com JWT, incluindo refresh token
 
 
 Configuração para usuário com priviégios de gravação e usuário read-only(Claim no JWT para permitir apenas leitura para certo usuários)
+
+Controle de versão de banco de dados com FlyWay
