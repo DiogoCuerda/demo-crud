@@ -16,7 +16,7 @@ public class DemoCrudApplication {
 
 	@GetMapping("/")
 	public String index(){
-		return "Hey Diplo vai toma no cu!------";
+		return "------";
 	}
 
 	@GetMapping("/easteregg")
